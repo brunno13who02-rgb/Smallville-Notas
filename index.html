@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smallville • Notas da Giselly V2.5</title>
-    <!-- Google Fonts: Inter & Outfit -->
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         :root {
             --bg-base: #090d16;
@@ -25,10 +28,15 @@
             --radius-sm: 12px;
             --radius-md: 16px;
             --radius-lg: 24px;
+            --sidebar-width: 270px;
+            --sidebar-collapsed: 82px;
             --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Temas Dinâmicos Modernos */
+        /* =========================
+           TEMAS
+        ========================= */
+
         body.theme-dark {
             --bg-base: #090d16;
             --bg-surface: rgba(17, 24, 39, 0.75);
@@ -43,6 +51,7 @@
             --primary-light: rgba(244, 63, 94, 0.12);
             --accent-glow: rgba(244, 63, 94, 0.25);
         }
+
         body.theme-light {
             --bg-base: #f1f5f9;
             --bg-surface: rgba(255, 255, 255, 0.85);
@@ -57,6 +66,7 @@
             --primary-light: rgba(244, 63, 94, 0.08);
             --accent-glow: rgba(244, 63, 94, 0.15);
         }
+
         body.theme-emerald {
             --bg-base: #022c22;
             --bg-surface: rgba(6, 78, 59, 0.65);
@@ -71,6 +81,7 @@
             --primary-light: rgba(16, 185, 129, 0.15);
             --accent-glow: rgba(16, 185, 129, 0.3);
         }
+
         body.theme-violet {
             --bg-base: #0f0728;
             --bg-surface: rgba(30, 27, 75, 0.7);
@@ -86,63 +97,445 @@
             --accent-glow: rgba(139, 92, 246, 0.3);
         }
 
+        /* =========================
+           RESET
+        ========================= */
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-base);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, var(--primary-light) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, var(--accent-glow) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 0;
+            display: block;
             -webkit-font-smoothing: antialiased;
             transition: background 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
         }
+
+        /* =========================
+           ESTRUTURA PRINCIPAL
+        ========================= */
+
+        .app-shell {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: var(--sidebar-width);
+            min-width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 500;
+
+            padding: 22px 16px;
+
+            display: flex;
+            flex-direction: column;
+
+            background: var(--bg-surface);
+            border-right: 1px solid var(--border);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                15px 0 45px rgba(0, 0, 0, 0.18),
+                inset -1px 0 0 rgba(255, 255, 255, 0.02);
+
+            transition:
+                width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                min-width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed);
+            min-width: var(--sidebar-collapsed);
+        }
+
+        /* Logo */
+
+        .sidebar-brand {
+            height: 62px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 0 8px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .sidebar-logo {
+            width: 45px;
+            min-width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-hover)
+                );
+
+            color: white;
+
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 700;
+
+            box-shadow:
+                0 10px 25px var(--accent-glow),
+                inset 0 1px 0 rgba(255,255,255,.2);
+
+            transition: var(--transition);
+        }
+
+        .sidebar-logo:hover {
+            transform: rotate(-4deg) scale(1.04);
+        }
+
+        .sidebar-brand-text {
+            min-width: 150px;
+            white-space: nowrap;
+            opacity: 1;
+            transition:
+                opacity 0.2s ease,
+                width 0.3s ease;
+        }
+
+        .sidebar-brand-text strong {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .sidebar-brand-text span {
+            display: block;
+            margin-top: 2px;
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar.collapsed .sidebar-brand-text {
+            opacity: 0;
+            width: 0;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        /* Título da navegação */
+
+        .sidebar-section-title {
+            color: var(--text-muted);
+            font-size: 0.63rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0 12px;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            transition: opacity .2s ease;
+        }
+
+        .sidebar.collapsed .sidebar-section-title {
+            opacity: 0;
+        }
+
+        /* Navegação */
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .sidebar-btn {
+            width: 100%;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            padding: 0 14px;
+
+            border: 1px solid transparent;
+            border-radius: 14px;
+
+            background: transparent;
+            color: var(--text-muted);
+
+            cursor: pointer;
+
+            font-family: 'Inter', sans-serif;
+            font-size: 0.86rem;
+            font-weight: 600;
+
+            text-align: left;
+
+            transition: var(--transition);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-btn:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.04);
+            border-color: var(--border);
+            transform: translateX(2px);
+        }
+
+        .sidebar-btn.active {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-hover)
+                );
+
+            border-color: rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 8px 25px var(--accent-glow),
+                inset 0 1px 0 rgba(255,255,255,.12);
+        }
+
+        .sidebar-btn.active::before {
+            content: "";
+
+            position: absolute;
+            left: 0;
+            top: 12px;
+            bottom: 12px;
+
+            width: 3px;
+
+            background: white;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .sidebar-icon {
+            width: 25px;
+            min-width: 25px;
+
+            text-align: center;
+
+            font-size: 1.12rem;
+
+            transition: transform .25s ease;
+        }
+
+        .sidebar-btn:hover .sidebar-icon {
+            transform: scale(1.12);
+        }
+
+        .sidebar-label {
+            white-space: nowrap;
+            overflow: hidden;
+
+            opacity: 1;
+
+            transition:
+                opacity .2s ease,
+                width .3s ease;
+        }
+
+        .sidebar.collapsed .sidebar-label {
+            opacity: 0;
+            width: 0;
+        }
+
+        .sidebar.collapsed .sidebar-btn {
+            justify-content: center;
+            padding: 0;
+        }
+
+        /* Tooltip no menu recolhido */
+
+        .sidebar.collapsed .sidebar-btn::after {
+            content: attr(title);
+
+            position: absolute;
+            left: calc(100% + 12px);
+            top: 50%;
+
+            transform: translateY(-50%) translateX(-5px);
+
+            padding: 8px 11px;
+
+            background: var(--bg-surface-solid);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            color: var(--text-main);
+
+            font-size: 0.72rem;
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            opacity: 0;
+            pointer-events: none;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,.25);
+
+            transition: .2s ease;
+        }
+
+        .sidebar.collapsed .sidebar-btn:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* Footer */
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .sidebar-collapse {
+            width: 100%;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            background: var(--bg-input);
+            color: var(--text-muted);
+
+            cursor: pointer;
+            font-size: 1rem;
+
+            transition: var(--transition);
+        }
+
+        .sidebar-collapse:hover {
+            color: var(--text-main);
+            background: var(--primary-light);
+            border-color: var(--border-focus);
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           CONTEÚDO PRINCIPAL
+        ========================= */
+
+        .main-content {
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+
+            margin-left: var(--sidebar-width);
+
+            padding: 40px 45px;
+
+            transition:
+                margin-left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            width: calc(100% - var(--sidebar-collapsed));
+            margin-left: var(--sidebar-collapsed);
+        }
+
+        /* Compatibilidade */
 
         .container {
             width: 100%;
-            max-width: 1050px;
+            max-width: none;
         }
 
-        /* Header Redesenhado */
+        .main-content > header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 35px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
         header {
             text-align: center;
-            margin-bottom: 35px;
         }
 
         .badge-tag {
             display: inline-flex;
             align-items: center;
+
             background: var(--primary-light);
             color: var(--primary);
+
             padding: 6px 18px;
+
             border-radius: 50px;
+
             font-size: 0.72rem;
             font-weight: 700;
+
             text-transform: uppercase;
             letter-spacing: 2px;
+
             margin-bottom: 14px;
+
             border: 1px solid var(--border);
+
             backdrop-filter: blur(12px);
-            box-shadow: 0 4px 12px var(--accent-glow);
+
+            box-shadow:
+                0 4px 12px var(--accent-glow);
         }
 
         h1 {
             font-family: 'Outfit', sans-serif;
             font-size: 2.8rem;
             font-weight: 700;
+
             letter-spacing: -0.5px;
+
             color: var(--text-main);
+
             margin-bottom: 8px;
         }
 
@@ -152,60 +545,44 @@
             font-weight: 400;
         }
 
-        /* Sistema de Abas Glassmorphism */
+        /* =========================
+           MENU ANTIGO OCULTO
+        ========================= */
+
         .tabs {
-            display: flex;
-            background: var(--bg-surface);
-            padding: 6px;
-            border-radius: var(--radius-md);
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px var(--border) inset;
-            backdrop-filter: blur(16px);
+            display: none !important;
+        }
+
+        /* =========================
+           CONTEÚDO DAS PÁGINAS
+        ========================= */
+
+        .main-content .tab-content {
             width: 100%;
-            overflow-x: auto;
-            gap: 6px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .tab-btn {
-            flex: 1;
-            min-width: 130px;
-            background: transparent;
-            color: var(--text-muted);
-            border: none;
-            padding: 13px 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.88rem;
-            transition: var(--transition);
-            white-space: nowrap;
-            text-align: center;
-        }
-
-        .tab-btn:hover {
-            color: var(--text-main);
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 6px 20px var(--accent-glow);
-        }
-
-        /* Conteúdo das Abas */
         .tab-content {
             display: none;
+
             background: var(--bg-surface);
+
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+
             padding: 40px;
+
             border-radius: var(--radius-lg);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 
-                        0 0 0 1px var(--border) inset;
+
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px var(--border) inset;
+
             border: 1px solid var(--border);
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+            animation:
+                fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .tab-content.active {
@@ -213,180 +590,293 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px) scale(0.99); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.99);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         h2 {
             font-family: 'Outfit', sans-serif;
+
             font-size: 1.45rem;
             font-weight: 600;
+
             margin-bottom: 24px;
+
             color: var(--text-main);
+
             letter-spacing: -0.3px;
         }
 
-        /* Formulários Aprimorados */
+        /* =========================
+           FORMULÁRIOS
+        ========================= */
+
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(210px, 1fr));
+
             gap: 20px;
+
             margin-bottom: 20px;
         }
 
         label {
             display: block;
+
             margin-bottom: 8px;
+
             font-size: 0.75rem;
             font-weight: 700;
+
             color: var(--text-muted);
+
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
+
             padding: 14px 18px;
+
             border-radius: var(--radius-sm);
+
             border: 1px solid var(--border);
+
             background: var(--bg-input);
+
             color: var(--text-main);
+
             font-size: 0.95rem;
             font-family: 'Inter', sans-serif;
+
             transition: var(--transition);
         }
 
-        input:hover, select:hover {
+        input:hover,
+        select:hover {
             border-color: var(--border-focus);
         }
 
-        input:focus, select:focus {
+        input:focus,
+        select:focus {
             outline: none;
+
             border-color: var(--primary);
+
             background: var(--bg-surface-solid);
-            box-shadow: 0 0 0 4px var(--accent-glow);
+
+            box-shadow:
+                0 0 0 4px var(--accent-glow);
+        }
+
+        input::placeholder {
+            color: var(--text-muted);
+            opacity: .7;
         }
 
         button.btn-main {
             background: var(--primary);
             color: white;
+
             border: none;
+
             padding: 15px 24px;
+
             border-radius: var(--radius-sm);
+
             cursor: pointer;
+
             font-weight: 600;
             width: 100%;
+
             font-size: 0.95rem;
+
             transition: var(--transition);
-            box-shadow: 0 8px 25px var(--accent-glow);
+
+            box-shadow:
+                0 8px 25px var(--accent-glow);
         }
 
         button.btn-main:hover {
             background: var(--primary-hover);
+
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px var(--accent-glow);
+
+            box-shadow:
+                0 12px 30px var(--accent-glow);
         }
 
-        /* Cards de Personagens Modernos */
+        /* =========================
+           CARDS DE PERSONAGENS
+        ========================= */
+
         .character-rating-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
             gap: 15px;
+
             margin-top: 15px;
         }
 
         .character-rating-card {
             background: var(--bg-input);
+
             padding: 16px 20px;
+
             border-radius: var(--radius-sm);
+
             border: 1px solid var(--border);
+
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             gap: 15px;
+
             transition: var(--transition);
         }
 
         .character-rating-card:hover {
             border-color: var(--border-focus);
+
             background: var(--bg-surface-solid);
+
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.1);
         }
 
         .character-rating-card h3 {
             color: var(--text-main);
+
             font-size: 0.98rem;
             font-weight: 600;
+
             margin: 0;
         }
 
         .character-rating-card select {
             max-width: 130px;
+
             padding: 10px 14px;
+
             cursor: pointer;
         }
 
-        /* Histórico de Episódios */
+        /* =========================
+           HISTÓRICO
+        ========================= */
+
         .history-controls {
             display: flex;
+
             justify-content: space-between;
             align-items: center;
+
             margin-bottom: 25px;
+
             gap: 15px;
+
             flex-wrap: wrap;
         }
 
         .history-list {
             margin-top: 35px;
+
             border-top: 1px solid var(--border);
+
             padding-top: 30px;
         }
 
         .history-item {
             background: var(--bg-input);
+
             padding: 20px 24px;
+
             border-radius: var(--radius-sm);
+
             margin-bottom: 14px;
+
             display: flex;
+
             justify-content: space-between;
             align-items: center;
+
             border: 1px solid var(--border);
+
             transition: var(--transition);
+
             cursor: pointer;
+
             gap: 20px;
         }
 
         .history-item:hover {
             border-color: var(--primary);
+
             background: var(--bg-surface-solid);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.15);
+
             transform: translateX(4px);
         }
 
         .history-info {
             flex: 1;
+            min-width: 0;
         }
 
         .history-meta {
             display: flex;
+
             gap: 14px;
+
             align-items: center;
+
             margin-top: 6px;
+
             font-size: 0.84rem;
+
             color: var(--text-muted);
+
             flex-wrap: wrap;
         }
 
         .rating-badge {
             background: var(--primary-light);
+
             color: var(--primary);
+
             padding: 6px 14px;
+
             border-radius: 30px;
+
             font-weight: 700;
+
             font-size: 0.9rem;
+
             border: 1px solid var(--border);
-            box-shadow: 0 2px 8px var(--accent-glow);
+
+            box-shadow:
+                0 2px 8px var(--accent-glow);
+
+            white-space: nowrap;
         }
 
         .action-buttons {
@@ -396,50 +886,80 @@
 
         .icon-btn {
             background: var(--bg-surface);
+
             border: 1px solid var(--border);
+
             cursor: pointer;
+
             color: var(--text-muted);
+
             font-size: 0.9rem;
+
             width: 38px;
             height: 38px;
+
             border-radius: 50%;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             transition: var(--transition);
         }
 
         .icon-btn:hover {
             background: var(--primary);
+
             color: white;
+
             border-color: var(--primary);
+
             transform: scale(1.08);
-            box-shadow: 0 4px 12px var(--accent-glow);
+
+            box-shadow:
+                0 4px 12px var(--accent-glow);
         }
 
         .icon-btn.delete:hover {
             background: #ef4444;
+
             border-color: #ef4444;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+
+            box-shadow:
+                0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
-        /* Modal Ultra Limpo com Blur */
+        /* =========================
+           MODAL
+        ========================= */
+
         .modal-overlay {
             position: fixed;
+
             top: 0;
             left: 0;
+
             width: 100%;
             height: 100%;
+
             background: rgba(5, 8, 17, 0.75);
+
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+
             display: flex;
+
             justify-content: center;
             align-items: center;
+
             z-index: 1000;
+
             opacity: 0;
+
             pointer-events: none;
+
             transition: var(--transition);
+
             padding: 20px;
         }
 
@@ -450,132 +970,207 @@
 
         .modal-card {
             background: var(--bg-surface-solid);
+
             width: 100%;
             max-width: 680px;
+
             border-radius: var(--radius-lg);
+
             padding: 40px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border);
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px var(--border);
+
             max-height: 90vh;
+
             overflow-y: auto;
-            transform: translateY(20px) scale(0.98);
+
+            transform:
+                translateY(20px) scale(0.98);
+
             transition: var(--transition);
+
             position: relative;
         }
 
         .modal-overlay.active .modal-card {
-            transform: translateY(0) scale(1);
+            transform:
+                translateY(0) scale(1);
         }
 
         .modal-close {
             position: absolute;
+
             top: 24px;
             right: 24px;
+
             background: var(--bg-input);
+
             border: 1px solid var(--border);
+
             width: 38px;
             height: 38px;
+
             border-radius: 50%;
+
             font-size: 1rem;
+
             cursor: pointer;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             color: var(--text-muted);
+
             transition: var(--transition);
         }
 
         .modal-close:hover {
             background: var(--primary);
+
             color: white;
+
             border-color: var(--primary);
         }
 
         .modal-header-info {
             margin-bottom: 28px;
+
             padding-bottom: 22px;
-            border-bottom: 1px solid var(--border);
+
+            border-bottom:
+                1px solid var(--border);
         }
 
         .modal-stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(140px, 1fr));
+
             gap: 14px;
+
             margin-bottom: 28px;
         }
 
         .stat-box {
             background: var(--bg-input);
+
             padding: 16px;
+
             border-radius: var(--radius-sm);
+
             border: 1px solid var(--border);
+
             text-align: center;
         }
 
         .stat-box span {
             display: block;
+
             font-size: 0.72rem;
+
             color: var(--text-muted);
+
             text-transform: uppercase;
+
             letter-spacing: 1px;
+
             margin-bottom: 6px;
+
             font-weight: 700;
         }
 
         .stat-box strong {
             font-size: 1.15rem;
+
             color: var(--text-main);
+
             font-family: 'Outfit', sans-serif;
         }
 
         .modal-characters-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(260px, 1fr));
+
             gap: 12px;
+
             margin-bottom: 28px;
         }
 
         .modal-char-item {
             display: flex;
+
             justify-content: space-between;
             align-items: center;
+
             background: var(--bg-input);
+
             padding: 12px 18px;
+
             border-radius: var(--radius-sm);
+
             border: 1px solid var(--border);
+
             font-size: 0.92rem;
         }
 
-        /* Tabelas Modernas */
+        /* =========================
+           TABELAS
+        ========================= */
+
         table {
             width: 100%;
+
             border-collapse: separate;
             border-spacing: 0;
+
             margin-top: 15px;
+
             border-radius: var(--radius-sm);
+
             overflow: hidden;
+
             border: 1px solid var(--border);
         }
 
-        th, td {
+        th,
+        td {
             padding: 16px 20px;
+
             text-align: left;
+
             background: var(--bg-input);
+
             color: var(--text-main);
         }
 
         th {
             background-color: var(--bg-surface-solid);
+
             color: var(--text-muted);
+
             font-size: 0.72rem;
+
             text-transform: uppercase;
+
             letter-spacing: 1.2px;
+
             font-weight: 700;
-            border-bottom: 1px solid var(--border);
+
+            border-bottom:
+                1px solid var(--border);
         }
 
         td {
             font-size: 0.95rem;
-            border-bottom: 1px solid var(--border);
+
+            border-bottom:
+                1px solid var(--border);
         }
 
         tr:last-child td {
@@ -584,740 +1179,3112 @@
 
         .empty-state {
             text-align: center;
+
             color: var(--text-muted);
+
             font-style: italic;
+
             padding: 40px;
+
             font-size: 0.95rem;
+
             background: var(--bg-input);
+
             border-radius: var(--radius-sm);
+
             border: 1px solid var(--border);
         }
 
-        /* Container do Gráfico */
+        /* =========================
+           GRÁFICOS
+        ========================= */
+
         .chart-container {
             position: relative;
+
             height: 440px;
+
             width: 100%;
+
             background: var(--bg-input);
+
             padding: 24px;
+
             border-radius: var(--radius-md);
+
             border: 1px solid var(--border);
+
             margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.05);
         }
 
         .chart-controls {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(230px, 1fr));
+
             gap: 16px;
+
             margin-bottom: 24px;
         }
 
-        @media(max-width: 768px) {
-            body { padding: 20px 12px; }
-            .tab-content { padding: 24px 18px; }
-            h1 { font-size: 2.2rem; }
+        /* =========================
+           SCROLLBAR
+        ========================= */
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 20px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* =========================
+           RESPONSIVIDADE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .sidebar {
+                width: var(--sidebar-collapsed);
+                min-width: var(--sidebar-collapsed);
+            }
+
+            .sidebar-brand-text,
+            .sidebar-label,
+            .sidebar-section-title {
+                opacity: 0;
+            }
+
+            .sidebar-brand-text {
+                width: 0;
+                min-width: 0;
+            }
+
+            .sidebar-btn {
+                justify-content: center;
+                padding: 0;
+            }
+
+            .main-content {
+                width: calc(100% - var(--sidebar-collapsed));
+                margin-left: var(--sidebar-collapsed);
+            }
+
+            .sidebar.collapsed {
+                width: 0;
+                min-width: 0;
+                padding-left: 0;
+                padding-right: 0;
+                overflow: hidden;
+                border-right: none;
+            }
+
+            .sidebar.collapsed ~ .main-content {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .main-content {
+                padding: 25px 14px;
+            }
+
+            .tab-content {
+                padding: 24px 18px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .history-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .history-item > div:last-child {
+                justify-content: space-between;
+            }
+
+            .history-info {
+                width: 100%;
+            }
+
+            .chart-container {
+                height: 350px;
+                padding: 15px;
+            }
+
+            .modal-card {
+                padding: 28px 20px;
+            }
+
+            #characterForm {
+                flex-direction: column;
+            }
+
+            #characterForm .btn-main {
+                width: 100% !important;
+            }
+
+            .main-content .tab-content {
+                border-radius: 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                width: 70px;
+                min-width: 70px;
+                padding: 16px 10px;
+            }
+
+            .sidebar-logo {
+                width: 42px;
+                min-width: 42px;
+                height: 42px;
+            }
+
+            .sidebar-brand {
+                padding: 0;
+                justify-content: center;
+                margin-bottom: 25px;
+            }
+
+            .main-content {
+                width: calc(100% - 70px);
+                margin-left: 70px;
+                padding: 18px 10px;
+            }
+
+            .sidebar.collapsed {
+                width: 0;
+                min-width: 0;
+            }
+
+            .sidebar.collapsed ~ .main-content {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .tab-content {
+                padding: 22px 14px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 1.9rem;
+            }
+
+            header p {
+                font-size: .88rem;
+            }
+
+            .badge-tag {
+                font-size: .6rem;
+                letter-spacing: 1.2px;
+                padding: 6px 12px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .character-rating-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .character-rating-card {
+                padding: 14px;
+            }
+
+            .history-controls {
+                align-items: stretch;
+            }
+
+            .history-controls > div {
+                width: 100%;
+            }
+
+            .history-controls select {
+                flex: 1;
+            }
+
+            .history-item {
+                padding: 17px;
+            }
+
+            .modal-stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .modal-characters-list {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
+
 <body class="theme-dark">
 
-<div class="container">
-    <header>
-        <span class="badge-tag">Smallville • Acompanhamento Exclusivo</span>
-        <h1>Notas da Giselly</h1>
-        <p>Avaliações refinadas e estatísticas avançadas da série</p>
-    </header>
+<div class="app-shell">
 
-    <!-- Menu de Abas -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab(event, 'page1')">📝 Registrar</button>
-        <button class="tab-btn" onclick="switchTab(event, 'page2')">📈 Estatísticas</button>
-        <button class="tab-btn" onclick="switchTab(event, 'page3')">👥 Personagens</button>
-        <button class="tab-btn" onclick="switchTab(event, 'page4')">⚙️ Configurações</button>
-    </div>
+    <!-- ==========================================
+         SIDEBAR
+    =========================================== -->
 
-    <!-- PÁGINA 1: Registrar / Gerenciar Episódios -->
-    <div id="page1" class="tab-content active">
-        <h2 id="formTitle">Registro de Notas por Episódio</h2>
-        <form id="episodeForm" onsubmit="saveEpisode(event)">
-            <input type="hidden" id="editIndex" value="-1">
-            <div class="form-row">
-                <div>
-                    <label for="season">Temporada</label>
-                    <input type="number" id="season" min="1" max="10" required placeholder="Ex: 1">
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="sidebar-logo">S</div>
+
+            <div class="sidebar-brand-text">
+                <strong>Smallville</strong>
+                <span>Notas da Giselly</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section-title">
+            Navegação
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <button
+                class="sidebar-btn active"
+                onclick="switchTab(event, 'page1')"
+                title="Registrar episódios">
+
+                <span class="sidebar-icon">📝</span>
+                <span class="sidebar-label">Registrar</span>
+
+            </button>
+
+            <button
+                class="sidebar-btn"
+                onclick="switchTab(event, 'page2')"
+                title="Estatísticas">
+
+                <span class="sidebar-icon">📈</span>
+                <span class="sidebar-label">Estatísticas</span>
+
+            </button>
+
+            <button
+                class="sidebar-btn"
+                onclick="switchTab(event, 'page3')"
+                title="Personagens">
+
+                <span class="sidebar-icon">👥</span>
+                <span class="sidebar-label">Personagens</span>
+
+            </button>
+
+            <button
+                class="sidebar-btn"
+                onclick="switchTab(event, 'page4')"
+                title="Configurações">
+
+                <span class="sidebar-icon">⚙️</span>
+                <span class="sidebar-label">Configurações</span>
+
+            </button>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <button
+                class="sidebar-collapse"
+                onclick="toggleSidebar()"
+                title="Recolher ou expandir menu">
+
+                <span id="sidebarCollapseIcon">◀</span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==========================================
+         CONTEÚDO PRINCIPAL
+    =========================================== -->
+
+    <main class="main-content">
+
+        <header>
+
+            <span class="badge-tag">
+                Smallville • Acompanhamento Exclusivo
+            </span>
+
+            <h1>Notas da Giselly</h1>
+
+            <p>
+                Avaliações refinadas e estatísticas avançadas da série
+            </p>
+
+        </header>
+
+
+        <!-- ==========================================
+             PÁGINA 1
+        =========================================== -->
+
+        <div id="page1" class="tab-content active">
+
+            <h2 id="formTitle">
+                Registro de Notas por Episódio
+            </h2>
+
+            <form id="episodeForm" onsubmit="saveEpisode(event)">
+
+                <input
+                    type="hidden"
+                    id="editIndex"
+                    value="-1"
+                >
+
+                <div class="form-row">
+
+                    <div>
+                        <label for="season">
+                            Temporada
+                        </label>
+
+                        <input
+                            type="number"
+                            id="season"
+                            min="1"
+                            max="10"
+                            required
+                            placeholder="Ex: 1"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="episode">
+                            Episódio
+                        </label>
+
+                        <input
+                            type="number"
+                            id="episode"
+                            min="1"
+                            max="25"
+                            required
+                            placeholder="Ex: 1"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="episodeTitle">
+                            Nome do Episódio
+                        </label>
+
+                        <input
+                            type="text"
+                            id="episodeTitle"
+                            required
+                            placeholder="Ex: Piloto"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="date">
+                            Data Assistida
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
+                    </div>
+
                 </div>
-                <div>
-                    <label for="episode">Episódio</label>
-                    <input type="number" id="episode" min="1" max="25" required placeholder="Ex: 1">
+
+
+                <h2 style="margin-top: 35px;">
+                    Notas dos Personagens
+                </h2>
+
+                <div
+                    id="characterRatingContainer"
+                    class="character-rating-grid">
                 </div>
-                <div>
-                    <label for="episodeTitle">Nome do Episódio</label>
-                    <input type="text" id="episodeTitle" required placeholder="Ex: Piloto">
+
+
+                <div
+                    style="
+                        display:flex;
+                        gap:12px;
+                        margin-top:35px;
+                    ">
+
+                    <button
+                        type="submit"
+                        class="btn-main"
+                        id="saveBtn">
+
+                        Salvar Avaliações do Episódio
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-main"
+                        id="cancelEditBtn"
+                        style="
+                            background:var(--text-muted);
+                            display:none;
+                        "
+                        onclick="cancelEdit()">
+
+                        Cancelar Edição
+
+                    </button>
+
                 </div>
-                <div>
-                    <label for="date">Data Assistida</label>
-                    <input type="date" id="date" required>
+
+            </form>
+
+
+            <!-- HISTÓRICO -->
+
+            <div class="history-list">
+
+                <div class="history-controls">
+
+                    <h2>
+                        Episódios Registrados
+                    </h2>
+
+                    <div
+                        style="
+                            display:flex;
+                            gap:12px;
+                            align-items:center;
+                        ">
+
+                        <label style="margin:0;">
+                            Ordenar:
+                        </label>
+
+                        <select
+                            id="sortEpisodesBy"
+                            onchange="renderEpisodesHistory()"
+                            style="
+                                width:170px;
+                                padding:10px 14px;
+                            ">
+
+                            <option value="season-asc">
+                                Temporada (Cresc)
+                            </option>
+
+                            <option value="season-desc">
+                                Temporada (Decresc)
+                            </option>
+
+                            <option value="score-desc">
+                                Maior Nota Média
+                            </option>
+
+                            <option value="date-desc">
+                                Mais Recentes
+                            </option>
+
+                        </select>
+
+                    </div>
+
                 </div>
+
+                <div id="episodesHistory"></div>
+
             </div>
 
-            <h2 style="margin-top: 35px;">Notas dos Personagens</h2>
-            <div id="characterRatingContainer" class="character-rating-grid">
-                <!-- Gerado via JS -->
-            </div>
+        </div>
 
-            <div style="display: flex; gap: 12px; margin-top: 35px;">
-                <button type="submit" class="btn-main" id="saveBtn">Salvar Avaliações do Episódio</button>
-                <button type="button" class="btn-main" id="cancelEditBtn" style="background: var(--text-muted); display: none;" onclick="cancelEdit()">Cancelar Edição</button>
-            </div>
-        </form>
 
-        <div class="history-list">
-            <div class="history-controls">
-                <h2>Episódios Registrados</h2>
-                <div style="display: flex; gap: 12px; align-items: center;">
-                    <label style="margin:0;">Ordenar:</label>
-                    <select id="sortEpisodesBy" onchange="renderEpisodesHistory()" style="width: 170px; padding: 10px 14px;">
-                        <option value="season-asc">Temporada (Cresc)</option>
-                        <option value="season-desc">Temporada (Decresc)</option>
-                        <option value="score-desc">Maior Nota Média</option>
-                        <option value="date-desc">Mais Recentes</option>
+        <!-- ==========================================
+             PÁGINA 2
+        =========================================== -->
+
+        <div id="page2" class="tab-content">
+
+            <h2>
+                📈 Estatísticas e Gráficos Avançados
+            </h2>
+
+            <div class="chart-controls">
+
+                <div>
+
+                    <label for="chartTypeSelect">
+                        Tipo de Gráfico
+                    </label>
+
+                    <select
+                        id="chartTypeSelect"
+                        onchange="updateChart()">
+
+                        <option value="char-evolution">
+                            📈 Linha — Evolução do Personagem
+                        </option>
+
+                        <option value="char-avg-bar">
+                            📊 Barras — Nota Média por Personagem
+                        </option>
+
+                        <option value="multi-char-line">
+                            📈 Linha — Vários Personagens Juntos
+                        </option>
+
+                        <option value="multi-char-bar">
+                            📊 Barras — Vários Personagens Juntos
+                        </option>
+
+                        <option value="ranking-chars">
+                            🏆 Ranking — Melhores Personagens
+                        </option>
+
                     </select>
+
                 </div>
-            </div>
-            <div id="episodesHistory"></div>
-        </div>
-    </div>
 
-    <!-- PÁGINA 2: Gráficos e Estatísticas -->
-    <div id="page2" class="tab-content">
-        <h2>📈 Estatísticas e Gráficos Avançados</h2>
-        <div class="chart-controls">
-            <div>
-                <label for="chartTypeSelect">Tipo de Gráfico</label>
-                <select id="chartTypeSelect" onchange="updateChart()">
-                    <option value="char-evolution">📈 Linha — Evolução do Personagem</option>
-                    <option value="char-avg-bar">📊 Barras — Nota Média por Personagem</option>
-                    <option value="multi-char-line">📈 Linha — Vários Personagens Juntos</option>
-                    <option value="multi-char-bar">📊 Barras — Vários Personagens Juntos</option>
-                    <option value="ranking-chars">🏆 Ranking — Melhores Personagens</option>
+
+                <div id="chartFilterWrapper1">
+
+                    <label for="chartFilterChar">
+                        Filtrar Personagem
+                    </label>
+
+                    <select
+                        id="chartFilterChar"
+                        onchange="updateChart()">
+                    </select>
+
+                </div>
+
+
+                <div id="chartFilterWrapper2">
+
+                    <label for="chartFilterSeason">
+                        Filtrar Temporada
+                    </label>
+
+                    <select
+                        id="chartFilterSeason"
+                        onchange="updateChart()">
+
+                        <option value="all">
+                            Todas as Temporadas
+                        </option>
+
+                        <option value="1">Temporada 1</option>
+                        <option value="2">Temporada 2</option>
+                        <option value="3">Temporada 3</option>
+                        <option value="4">Temporada 4</option>
+                        <option value="5">Temporada 5</option>
+                        <option value="6">Temporada 6</option>
+                        <option value="7">Temporada 7</option>
+                        <option value="8">Temporada 8</option>
+                        <option value="9">Temporada 9</option>
+                        <option value="10">Temporada 10</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart-container">
+
+                <canvas id="advancedChart"></canvas>
+
+            </div>
+
+            <div
+                id="rankingTableContainer"
+                style="margin-top:25px;">
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             PÁGINA 3
+        =========================================== -->
+
+        <div id="page3" class="tab-content">
+
+            <h2>
+                👥 Gerenciar Personagens
+            </h2>
+
+            <form
+                id="characterForm"
+                onsubmit="addCharacter(event)"
+                style="
+                    margin-bottom:30px;
+                    display:flex;
+                    gap:14px;
+                ">
+
+                <input
+                    type="text"
+                    id="newCharacterName"
+                    placeholder="Nome do Personagem (ex: Lois Lane)"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="btn-main"
+                    style="
+                        width:180px;
+                        flex-shrink:0;
+                    ">
+
+                    Adicionar
+
+                </button>
+
+            </form>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Nome do Personagem
+                        </th>
+
+                        <th
+                            style="
+                                width:110px;
+                                text-align:center;
+                            ">
+
+                            Ações
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="characterTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ==========================================
+             PÁGINA 4
+        =========================================== -->
+
+        <div id="page4" class="tab-content">
+
+            <h2>
+                ⚙️ Configurações de Aparência
+            </h2>
+
+            <div
+                style="
+                    margin-bottom:30px;
+                    max-width:350px;
+                ">
+
+                <label for="themeSelect">
+                    Tema da Interface
+                </label>
+
+                <select
+                    id="themeSelect"
+                    onchange="changeTheme(this.value)">
+
+                    <option value="dark">
+                        Dark Moderno (Padrão)
+                    </option>
+
+                    <option value="light">
+                        Light Clean
+                    </option>
+
+                    <option value="emerald">
+                        Emerald Green
+                    </option>
+
+                    <option value="violet">
+                        Deep Violet
+                    </option>
+
                 </select>
+
             </div>
-            <div id="chartFilterWrapper1">
-                <label for="chartFilterChar">Filtrar Personagem</label>
-                <select id="chartFilterChar" onchange="updateChart()">
-                    <!-- Preenchido via JS -->
-                </select>
+
+
+            <hr
+                style="
+                    border:0;
+                    border-top:1px solid var(--border);
+                    margin:35px 0;
+                "
+            >
+
+
+            <h2>
+                💾 Backup e Sincronização
+            </h2>
+
+            <p
+                style="
+                    color:var(--text-muted);
+                    font-size:.95rem;
+                    margin-bottom:24px;
+                ">
+
+                Exporte todas as suas avaliações e personagens
+                para um arquivo JSON seguro ou importe um backup anterior.
+
+            </p>
+
+
+            <div
+                style="
+                    display:flex;
+                    gap:16px;
+                    flex-wrap:wrap;
+                ">
+
+                <button
+                    type="button"
+                    class="btn-main"
+                    onclick="exportData()"
+                    style="
+                        flex:1;
+                        min-width:220px;
+                    ">
+
+                    📤 Exportar Backup (JSON)
+
+                </button>
+
+
+                <label
+                    class="btn-main"
+                    style="
+                        flex:1;
+                        min-width:220px;
+                        text-align:center;
+                        cursor:pointer;
+                        display:inline-flex;
+                        align-items:center;
+                        justify-content:center;
+                    ">
+
+                    📥 Importar Backup
+
+                    <input
+                        type="file"
+                        id="importFile"
+                        accept=".json"
+                        onchange="importData(event)"
+                        style="display:none;"
+                    >
+
+                </label>
+
             </div>
-            <div id="chartFilterWrapper2">
-                <label for="chartFilterSeason">Filtrar Temporada</label>
-                <select id="chartFilterSeason" onchange="updateChart()">
-                    <option value="all">Todas as Temporadas</option>
-                    <option value="1">Temporada 1</option>
-                    <option value="2">Temporada 2</option>
-                    <option value="3">Temporada 3</option>
-                    <option value="4">Temporada 4</option>
-                    <option value="5">Temporada 5</option>
-                    <option value="6">Temporada 6</option>
-                    <option value="7">Temporada 7</option>
-                    <option value="8">Temporada 8</option>
-                    <option value="9">Temporada 9</option>
-                    <option value="10">Temporada 10</option>
-                </select>
-            </div>
-        </div>
-        <div class="chart-container">
-            <canvas id="advancedChart"></canvas>
-        </div>
-        <div id="rankingTableContainer" style="margin-top: 25px;"></div>
-    </div>
 
-    <!-- PÁGINA 3: Cadastro de Personagens -->
-    <div id="page3" class="tab-content">
-        <h2>👥 Gerenciar Personagens</h2>
-        <form id="characterForm" onsubmit="addCharacter(event)" style="margin-bottom: 30px; display: flex; gap: 14px;">
-            <input type="text" id="newCharacterName" placeholder="Nome do Personagem (ex: Lois Lane)" required>
-            <button type="submit" class="btn-main" style="width: 180px; flex-shrink: 0;">Adicionar</button>
-        </form>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome do Personagem</th>
-                    <th style="width: 110px; text-align: center;">Ações</th>
-                </tr>
-            </thead>
-            <tbody id="characterTableBody">
-                <!-- Preenchido via JS -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- PÁGINA 4: Configurações e Backup -->
-    <div id="page4" class="tab-content">
-        <h2>⚙️ Configurações de Aparência</h2>
-        
-        <div style="margin-bottom: 30px; max-width: 350px;">
-            <label for="themeSelect">Tema da Interface</label>
-            <select id="themeSelect" onchange="changeTheme(this.value)">
-                <option value="dark">Dark Moderno (Padrão)</option>
-                <option value="light">Light Clean</option>
-                <option value="emerald">Emerald Green</option>
-                <option value="violet">Deep Violet</option>
-            </select>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid var(--border); margin: 35px 0;">
+    </main>
 
-        <h2>💾 Backup e Sincronização</h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
-            Exporte todas as suas avaliações e personagens para um arquivo JSON seguro ou importe um backup anterior.
-        </p>
-
-        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-            <button type="button" class="btn-main" onclick="exportData()" style="flex: 1; min-width: 220px;">📤 Exportar Backup (JSON)</button>
-            <label class="btn-main" style="flex: 1; min-width: 220px; text-align: center; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
-                📥 Importar Backup
-                <input type="file" id="importFile" accept=".json" onchange="importData(event)" style="display: none;">
-            </label>
-        </div>
-    </div>
 </div>
 
-<!-- MODAL DE DETALHES DO EPISÓDIO -->
-<div id="episodeModal" class="modal-overlay" onclick="closeModalOnOutside(event)">
+
+<!-- ==========================================
+     MODAL DE DETALHES
+=========================================== -->
+
+<div
+    id="episodeModal"
+    class="modal-overlay"
+    onclick="closeModalOnOutside(event)">
+
     <div class="modal-card">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <div id="modalBodyContent">
-            <!-- Conteúdo injetado via JS -->
-        </div>
+
+        <button
+            class="modal-close"
+            onclick="closeModal()">
+
+            ✕
+
+        </button>
+
+        <div id="modalBodyContent"></div>
+
     </div>
+
 </div>
+
 
 <script>
-    // --- ESTADO INICIAL / LOCALSTORAGE ---
-    let characters = JSON.parse(localStorage.getItem('sm_characters')) || [
-        { id: 1, name: 'Clark Kent' },
-        { id: 2, name: 'Lana Lang' },
-        { id: 3, name: 'Lex Luthor' },
-        { id: 4, name: 'Chloe Sullivan' },
-        { id: 5, name: 'Pete Ross' },
-        { id: 6, name: 'Jonathan Kent' },
-        { id: 7, name: 'Martha Kent' }
-    ];
 
-    let episodes = JSON.parse(localStorage.getItem('sm_episodes')) || [];
+    /* ==========================================
+       ESTADO INICIAL / LOCALSTORAGE
+    =========================================== */
+
+    let characters =
+        JSON.parse(localStorage.getItem('sm_characters')) ||
+        [
+            { id: 1, name: 'Clark Kent' },
+            { id: 2, name: 'Lana Lang' },
+            { id: 3, name: 'Lex Luthor' },
+            { id: 4, name: 'Chloe Sullivan' },
+            { id: 5, name: 'Pete Ross' },
+            { id: 6, name: 'Jonathan Kent' },
+            { id: 7, name: 'Martha Kent' }
+        ];
+
+
+    let episodes =
+        JSON.parse(localStorage.getItem('sm_episodes')) ||
+        [];
+
 
     episodes = episodes.map(ep => {
-        if (ep.title === undefined) ep.title = `Episódio ${ep.episode}`;
-        if (ep.generalScore === undefined) {
-            let scores = Object.values(ep.ratings || {}).map(r => r.score);
-            ep.generalScore = scores.length > 0 ? Number((scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1)) : 5.0;
+
+        if (ep.title === undefined) {
+            ep.title = `Episódio ${ep.episode}`;
         }
+
+        if (ep.generalScore === undefined) {
+
+            let scores =
+                Object.values(ep.ratings || {})
+                .map(r => r.score);
+
+            ep.generalScore =
+                scores.length > 0
+                    ? Number(
+                        (
+                            scores.reduce((a,b) => a+b,0)
+                            / scores.length
+                        ).toFixed(1)
+                    )
+                    : 5.0;
+        }
+
         return ep;
+
     });
+
 
     let myChart = null;
 
-    // --- CARREGAR TEMA SALVO ---
-    const savedTheme = localStorage.getItem('sm_theme') || 'dark';
-    document.body.className = `theme-${savedTheme}`;
-    document.getElementById('themeSelect').value = savedTheme;
+
+    /* ==========================================
+       TEMA
+    =========================================== */
+
+    const savedTheme =
+        localStorage.getItem('sm_theme') || 'dark';
+
+    document.body.className =
+        `theme-${savedTheme}`;
+
+    document.getElementById('themeSelect').value =
+        savedTheme;
+
 
     function changeTheme(themeName) {
-        document.body.className = `theme-${themeName}`;
-        localStorage.setItem('sm_theme', themeName);
+
+        document.body.className =
+            `theme-${themeName}`;
+
+        localStorage.setItem(
+            'sm_theme',
+            themeName
+        );
+
     }
 
-    // --- BACKUP: EXPORTAR E IMPORTAR ---
+
+    /* ==========================================
+       SIDEBAR
+    =========================================== */
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById('sidebar');
+
+        const icon =
+            document.getElementById('sidebarCollapseIcon');
+
+        sidebar.classList.toggle('collapsed');
+
+
+        if (sidebar.classList.contains('collapsed')) {
+
+            icon.textContent = '▶';
+
+            localStorage.setItem(
+                'sm_sidebar_collapsed',
+                'true'
+            );
+
+        } else {
+
+            icon.textContent = '◀';
+
+            localStorage.setItem(
+                'sm_sidebar_collapsed',
+                'false'
+            );
+
+        }
+
+    }
+
+
+    function loadSidebarState() {
+
+        const sidebar =
+            document.getElementById('sidebar');
+
+        const icon =
+            document.getElementById('sidebarCollapseIcon');
+
+        const collapsed =
+            localStorage.getItem(
+                'sm_sidebar_collapsed'
+            ) === 'true';
+
+
+        if (collapsed) {
+
+            sidebar.classList.add('collapsed');
+
+            if (icon) {
+                icon.textContent = '▶';
+            }
+
+        } else {
+
+            if (icon) {
+                icon.textContent = '◀';
+            }
+
+        }
+
+    }
+
+
+    /* ==========================================
+       BACKUP — EXPORTAR
+    =========================================== */
+
     function exportData() {
+
         const backupData = {
             characters: characters,
             episodes: episodes
         };
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", `smallville_backup_${new Date().toISOString().slice(0,10)}.json`);
-        document.body.appendChild(downloadAnchor);
+
+
+        const dataStr =
+            "data:text/json;charset=utf-8," +
+            encodeURIComponent(
+                JSON.stringify(
+                    backupData,
+                    null,
+                    2
+                )
+            );
+
+
+        const downloadAnchor =
+            document.createElement('a');
+
+
+        downloadAnchor.setAttribute(
+            "href",
+            dataStr
+        );
+
+
+        downloadAnchor.setAttribute(
+            "download",
+            `smallville_backup_${new Date()
+                .toISOString()
+                .slice(0,10)}.json`
+        );
+
+
+        document.body.appendChild(
+            downloadAnchor
+        );
+
+
         downloadAnchor.click();
+
         downloadAnchor.remove();
+
     }
+
+
+    /* ==========================================
+       BACKUP — IMPORTAR
+    =========================================== */
 
     function importData(event) {
-        const file = event.target.files[0];
+
+        const file =
+            event.target.files[0];
+
         if (!file) return;
 
-        const reader = new FileReader();
+
+        const reader =
+            new FileReader();
+
+
         reader.onload = function(e) {
+
             try {
-                const imported = JSON.parse(e.target.result);
-                if (imported.characters && imported.episodes) {
-                    if (confirm("Importar este backup substituirá os dados atuais. Deseja continuar?")) {
-                        characters = imported.characters;
-                        episodes = imported.episodes;
-                        localStorage.setItem('sm_characters', JSON.stringify(characters));
-                        localStorage.setItem('sm_episodes', JSON.stringify(episodes));
+
+                const imported =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                if (
+                    imported.characters &&
+                    imported.episodes
+                ) {
+
+                    if (
+                        confirm(
+                            "Importar este backup substituirá os dados atuais. Deseja continuar?"
+                        )
+                    ) {
+
+                        characters =
+                            imported.characters;
+
+                        episodes =
+                            imported.episodes;
+
+
+                        localStorage.setItem(
+                            'sm_characters',
+                            JSON.stringify(characters)
+                        );
+
+                        localStorage.setItem(
+                            'sm_episodes',
+                            JSON.stringify(episodes)
+                        );
+
+
                         renderCharacters();
+
                         renderEpisodesHistory();
-                        alert("Backup importado com sucesso!");
+
+                        alert(
+                            "Backup importado com sucesso!"
+                        );
+
                     }
+
                 } else {
-                    alert("O arquivo selecionado não possui o formato de backup válido.");
+
+                    alert(
+                        "O arquivo selecionado não possui o formato de backup válido."
+                    );
+
                 }
+
             } catch(err) {
-                alert("Erro ao ler o arquivo JSON.");
+
+                alert(
+                    "Erro ao ler o arquivo JSON."
+                );
+
             }
+
         };
+
+
         reader.readAsText(file);
+
+        event.target.value = '';
+
     }
 
-    // --- CONTROLE DE ABAS ---
+
+    /* ==========================================
+       CONTROLE DAS PÁGINAS
+    =========================================== */
+
     function switchTab(evt, tabId) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        evt.currentTarget.classList.add('active');
+
+        document
+            .querySelectorAll('.tab-content')
+            .forEach(el => {
+                el.classList.remove('active');
+            });
+
+
+        document
+            .querySelectorAll('.sidebar-btn')
+            .forEach(el => {
+                el.classList.remove('active');
+            });
+
+
+        const page =
+            document.getElementById(tabId);
+
+        if (page) {
+            page.classList.add('active');
+        }
+
+
+        if (evt && evt.currentTarget) {
+
+            evt.currentTarget.classList.add(
+                'active'
+            );
+
+        }
+
 
         if (tabId === 'page2') {
+
             initChartFilters();
+
             updateChart();
+
         }
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
     }
 
-    // --- DATA PADRÃO HOJE ---
-    document.getElementById('date').valueAsDate = new Date();
 
-    // --- PÁGINA 3: PERSONAGENS ---
+    /* ==========================================
+       DATA PADRÃO
+    =========================================== */
+
+    document.getElementById(
+        'date'
+    ).valueAsDate = new Date();
+
+
+    /* ==========================================
+       PERSONAGENS
+    =========================================== */
+
     function renderCharacters() {
-        const tbody = document.getElementById('characterTableBody');
+
+        const tbody =
+            document.getElementById(
+                'characterTableBody'
+            );
+
+
         tbody.innerHTML = '';
+
+
         if (characters.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="2" class="empty-state">Nenhum personagem cadastrado.</td></tr>`;
-            return;
-        }
-        characters.forEach((char) => {
-            tbody.innerHTML += `
+
+            tbody.innerHTML = `
                 <tr>
-                    <td><strong style="color: var(--text-main); font-weight: 600;">${char.name}</strong></td>
-                    <td style="text-align: center;"><button class="icon-btn delete" onclick="deleteCharacter(${char.id})" title="Excluir">✕</button></td>
+                    <td
+                        colspan="2"
+                        class="empty-state">
+                        Nenhum personagem cadastrado.
+                    </td>
                 </tr>
             `;
+
+            renderRatingFormInputs();
+
+            return;
+        }
+
+
+        characters.forEach(char => {
+
+            tbody.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        <strong
+                            style="
+                                color:var(--text-main);
+                                font-weight:600;
+                            ">
+
+                            ${char.name}
+
+                        </strong>
+                    </td>
+
+                    <td style="text-align:center;">
+
+                        <button
+                            class="icon-btn delete"
+                            onclick="deleteCharacter(${char.id})"
+                            title="Excluir">
+
+                            ✕
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
         });
+
+
         renderRatingFormInputs();
+
     }
+
 
     function addCharacter(e) {
-        e.preventDefault();
-        const nameInput = document.getElementById('newCharacterName');
-        const newName = nameInput.value.trim();
-        if(!newName) return;
 
-        const newId = characters.length > 0 ? Math.max(...characters.map(c => c.id)) + 1 : 1;
-        characters.push({ id: newId, name: newName });
-        localStorage.setItem('sm_characters', JSON.stringify(characters));
+        e.preventDefault();
+
+
+        const nameInput =
+            document.getElementById(
+                'newCharacterName'
+            );
+
+
+        const newName =
+            nameInput.value.trim();
+
+
+        if (!newName) return;
+
+
+        const newId =
+            characters.length > 0
+                ? Math.max(
+                    ...characters.map(c => c.id)
+                ) + 1
+                : 1;
+
+
+        characters.push({
+            id: newId,
+            name: newName
+        });
+
+
+        localStorage.setItem(
+            'sm_characters',
+            JSON.stringify(characters)
+        );
+
+
         nameInput.value = '';
+
+
         renderCharacters();
+
     }
+
 
     function deleteCharacter(id) {
-        if(confirm("Deseja realmente excluir este personagem?")) {
-            characters = characters.filter(c => c.id !== id);
-            localStorage.setItem('sm_characters', JSON.stringify(characters));
+
+        if (
+            confirm(
+                "Deseja realmente excluir este personagem?"
+            )
+        ) {
+
+            characters =
+                characters.filter(
+                    c => c.id !== id
+                );
+
+
+            localStorage.setItem(
+                'sm_characters',
+                JSON.stringify(characters)
+            );
+
+
             renderCharacters();
+
         }
+
     }
 
-    // --- PÁGINA 1: REGISTRO E EDIÇÃO DE EPISÓDIO ---
-    function renderRatingFormInputs(existingRatings = {}) {
-        const container = document.getElementById('characterRatingContainer');
+
+    /* ==========================================
+       FORMULÁRIO DE NOTAS
+    =========================================== */
+
+    function renderRatingFormInputs(
+        existingRatings = {}
+    ) {
+
+        const container =
+            document.getElementById(
+                'characterRatingContainer'
+            );
+
+
         container.innerHTML = '';
+
+
         if (characters.length === 0) {
-            container.innerHTML = `<p class="empty-state">Cadastre personagens na aba "Personagens" primeiro.</p>`;
+
+            container.innerHTML = `
+
+                <p class="empty-state">
+
+                    Cadastre personagens na aba
+                    "Personagens" primeiro.
+
+                </p>
+
+            `;
+
             return;
         }
 
+
         characters.forEach(char => {
-            let currentScore = (existingRatings[char.id] !== undefined) ? existingRatings[char.id].score : "";
-            let optionsHtml = `<option value="">Nota...</option>`;
+
+            let currentScore =
+                existingRatings[char.id] !== undefined
+                    ? existingRatings[char.id].score
+                    : "";
+
+
+            let optionsHtml =
+                `<option value="">Nota...</option>`;
+
+
             for (let i = 1; i <= 10; i++) {
-                optionsHtml += `<option value="${i}" ${currentScore == i ? 'selected' : ''}>${i}</option>`;
+
+                optionsHtml += `
+
+                    <option
+                        value="${i}"
+                        ${currentScore == i
+                            ? 'selected'
+                            : ''}>
+
+                        ${i}
+
+                    </option>
+
+                `;
+
             }
+
 
             container.innerHTML += `
+
                 <div class="character-rating-card">
-                    <h3>${char.name}</h3>
-                    <select data-char-id="${char.id}" class="char-score-select">
+
+                    <h3>
+                        ${char.name}
+                    </h3>
+
+                    <select
+                        data-char-id="${char.id}"
+                        class="char-score-select">
+
                         ${optionsHtml}
+
                     </select>
+
                 </div>
+
             `;
+
         });
+
     }
+
+
+    /* ==========================================
+       SALVAR EPISÓDIO
+    =========================================== */
 
     function saveEpisode(e) {
-        e.preventDefault();
-        const editIndex = parseInt(document.getElementById('editIndex').value);
-        const season = parseInt(document.getElementById('season').value);
-        const episode = parseInt(document.getElementById('episode').value);
-        const title = document.getElementById('episodeTitle').value.trim();
-        const date = document.getElementById('date').value;
 
-        const scoreSelects = document.querySelectorAll('.char-score-select');
+        e.preventDefault();
+
+
+        const editIndex =
+            parseInt(
+                document.getElementById(
+                    'editIndex'
+                ).value
+            );
+
+
+        const season =
+            parseInt(
+                document.getElementById(
+                    'season'
+                ).value
+            );
+
+
+        const episode =
+            parseInt(
+                document.getElementById(
+                    'episode'
+                ).value
+            );
+
+
+        const title =
+            document.getElementById(
+                'episodeTitle'
+            ).value.trim();
+
+
+        const date =
+            document.getElementById(
+                'date'
+            ).value;
+
+
+        const scoreSelects =
+            document.querySelectorAll(
+                '.char-score-select'
+            );
+
+
         let ratings = {};
 
+
         scoreSelects.forEach(select => {
-            const charId = select.getAttribute('data-char-id');
-            const score = select.value;
+
+            const charId =
+                select.getAttribute(
+                    'data-char-id'
+                );
+
+
+            const score =
+                select.value;
+
+
             if (score !== "") {
-                ratings[charId] = { score: parseFloat(score) };
+
+                ratings[charId] = {
+                    score: parseFloat(score)
+                };
+
             }
+
         });
 
-        let scores = Object.values(ratings).map(r => r.score);
-        let generalScore = scores.length > 0 ? parseFloat((scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1)) : 0;
 
-        const episodeData = { season, episode, title, date, generalScore, ratings };
+        let scores =
+            Object.values(ratings)
+            .map(r => r.score);
+
+
+        let generalScore =
+            scores.length > 0
+                ? parseFloat(
+                    (
+                        scores.reduce(
+                            (a,b) => a+b,
+                            0
+                        ) / scores.length
+                    ).toFixed(1)
+                )
+                : 0;
+
+
+        const episodeData = {
+            season,
+            episode,
+            title,
+            date,
+            generalScore,
+            ratings
+        };
+
 
         if (editIndex >= 0) {
-            episodes[editIndex] = episodeData;
+
+            episodes[editIndex] =
+                episodeData;
+
             cancelEdit();
+
         } else {
-            const existingIndex = episodes.findIndex(ep => ep.season === season && ep.episode === episode);
+
+            const existingIndex =
+                episodes.findIndex(
+                    ep =>
+                        ep.season === season &&
+                        ep.episode === episode
+                );
+
+
             if (existingIndex >= 0) {
-                if(!confirm(`Já existe o T${season}E${episode}. Deseja sobrescrevê-lo?`)) return;
-                episodes[existingIndex] = episodeData;
+
+                if (
+                    !confirm(
+                        `Já existe o T${season}E${episode}. Deseja sobrescrevê-lo?`
+                    )
+                ) {
+                    return;
+                }
+
+
+                episodes[existingIndex] =
+                    episodeData;
+
             } else {
-                episodes.push(episodeData);
+
+                episodes.push(
+                    episodeData
+                );
+
             }
+
         }
 
-        localStorage.setItem('sm_episodes', JSON.stringify(episodes));
-        alert('Episódio salvo com sucesso!');
-        document.getElementById('episodeForm').reset();
-        document.getElementById('date').valueAsDate = new Date();
+
+        localStorage.setItem(
+            'sm_episodes',
+            JSON.stringify(episodes)
+        );
+
+
+        alert(
+            'Episódio salvo com sucesso!'
+        );
+
+
+        document
+            .getElementById(
+                'episodeForm'
+            )
+            .reset();
+
+
+        document.getElementById(
+            'date'
+        ).valueAsDate = new Date();
+
+
         renderRatingFormInputs();
+
         renderEpisodesHistory();
+
     }
+
+
+    /* ==========================================
+       HISTÓRICO DE EPISÓDIOS
+    =========================================== */
 
     function renderEpisodesHistory() {
-        const container = document.getElementById('episodesHistory');
-        const sortBy = document.getElementById('sortEpisodesBy').value;
 
-        let sortedEpisodes = [...episodes];
-        sortedEpisodes.sort((a, b) => {
-            if (sortBy === 'season-asc') return (a.season - b.season) || (a.episode - b.episode);
-            if (sortBy === 'season-desc') return (b.season - a.season) || (b.episode - a.episode);
-            if (sortBy === 'score-desc') return b.generalScore - a.generalScore;
-            if (sortBy === 'date-desc') return new Date(b.date) - new Date(a.date);
+        const container =
+            document.getElementById(
+                'episodesHistory'
+            );
+
+
+        const sortBy =
+            document.getElementById(
+                'sortEpisodesBy'
+            ).value;
+
+
+        let sortedEpisodes =
+            [...episodes];
+
+
+        sortedEpisodes.sort((a,b) => {
+
+            if (
+                sortBy === 'season-asc'
+            ) {
+
+                return (
+                    a.season - b.season
+                ) ||
+                (
+                    a.episode - b.episode
+                );
+
+            }
+
+
+            if (
+                sortBy === 'season-desc'
+            ) {
+
+                return (
+                    b.season - a.season
+                ) ||
+                (
+                    b.episode - a.episode
+                );
+
+            }
+
+
+            if (
+                sortBy === 'score-desc'
+            ) {
+
+                return (
+                    b.generalScore -
+                    a.generalScore
+                );
+
+            }
+
+
+            if (
+                sortBy === 'date-desc'
+            ) {
+
+                return (
+                    new Date(b.date) -
+                    new Date(a.date)
+                );
+
+            }
+
+
             return 0;
+
         });
 
-        if (sortedEpisodes.length === 0) {
-            container.innerHTML = `<p class="empty-state">Nenhum episódio registrado ainda.</p>`;
+
+        if (
+            sortedEpisodes.length === 0
+        ) {
+
+            container.innerHTML = `
+
+                <p class="empty-state">
+
+                    Nenhum episódio registrado ainda.
+
+                </p>
+
+            `;
+
             return;
+
         }
+
 
         let html = '';
-        sortedEpisodes.forEach((ep) => {
-            const realIndex = episodes.findIndex(e => e.season === ep.season && e.episode === ep.episode);
-            let ratedCount = Object.keys(ep.ratings || {}).length;
+
+
+        sortedEpisodes.forEach(ep => {
+
+            const realIndex =
+                episodes.findIndex(
+                    e =>
+                        e.season === ep.season &&
+                        e.episode === ep.episode
+                );
+
+
+            let ratedCount =
+                Object.keys(
+                    ep.ratings || {}
+                ).length;
+
 
             html += `
-                <div class="history-item" onclick="openEpisodeModal(${realIndex})">
+
+                <div
+                    class="history-item"
+                    onclick="openEpisodeModal(${realIndex})">
+
                     <div class="history-info">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <strong style="color: var(--text-main); font-size: 1.08rem; font-family: 'Outfit', sans-serif;">T${ep.season}E${ep.episode} — ${ep.title}</strong>
+
+                        <div
+                            style="
+                                display:flex;
+                                align-items:center;
+                                gap:12px;
+                            ">
+
+                            <strong
+                                style="
+                                    color:var(--text-main);
+                                    font-size:1.08rem;
+                                    font-family:'Outfit',sans-serif;
+                                ">
+
+                                T${ep.season}E${ep.episode}
+                                — ${ep.title}
+
+                            </strong>
+
                         </div>
+
+
                         <div class="history-meta">
-                            <span>📅 ${ep.date}</span>
+
+                            <span>
+                                📅 ${ep.date}
+                            </span>
+
                             <span>•</span>
-                            <span>👥 ${ratedCount} avaliado(s)</span>
+
+                            <span>
+                                👥 ${ratedCount}
+                                avaliado(s)
+                            </span>
+
                         </div>
+
                     </div>
-                    <div style="display: flex; align-items: center; gap: 18px;">
-                        <span class="rating-badge">⭐ ${ep.generalScore.toFixed(1)}/10</span>
-                        <div class="action-buttons" onclick="event.stopPropagation()">
-                            <button class="icon-btn" onclick="editEpisode(${realIndex})" title="Editar">✏️</button>
-                            <button class="icon-btn delete" onclick="deleteEpisode(${realIndex})" title="Excluir">✕</button>
+
+
+                    <div
+                        style="
+                            display:flex;
+                            align-items:center;
+                            gap:18px;
+                        ">
+
+                        <span class="rating-badge">
+                            ⭐ ${Number(ep.generalScore).toFixed(1)}/10
+                        </span>
+
+
+                        <div
+                            class="action-buttons"
+                            onclick="event.stopPropagation()">
+
+                            <button
+                                class="icon-btn"
+                                onclick="editEpisode(${realIndex})"
+                                title="Editar">
+
+                                ✏️
+
+                            </button>
+
+
+                            <button
+                                class="icon-btn delete"
+                                onclick="deleteEpisode(${realIndex})"
+                                title="Excluir">
+
+                                ✕
+
+                            </button>
+
                         </div>
+
                     </div>
+
                 </div>
+
             `;
+
         });
+
+
         container.innerHTML = html;
+
     }
+
+
+    /* ==========================================
+       EXCLUIR EPISÓDIO
+    =========================================== */
 
     function deleteEpisode(index) {
-        if(confirm("Deseja realmente excluir este episódio?")) {
+
+        if (
+            confirm(
+                "Deseja realmente excluir este episódio?"
+            )
+        ) {
+
             episodes.splice(index, 1);
-            localStorage.setItem('sm_episodes', JSON.stringify(episodes));
+
+
+            localStorage.setItem(
+                'sm_episodes',
+                JSON.stringify(episodes)
+            );
+
+
             renderEpisodesHistory();
+
         }
+
     }
+
+
+    /* ==========================================
+       EDITAR EPISÓDIO
+    =========================================== */
 
     function editEpisode(index) {
-        const ep = episodes[index];
-        document.getElementById('editIndex').value = index;
-        document.getElementById('season').value = ep.season;
-        document.getElementById('episode').value = ep.episode;
-        document.getElementById('episodeTitle').value = ep.title;
-        document.getElementById('date').value = ep.date;
 
-        renderRatingFormInputs(ep.ratings);
+        const ep =
+            episodes[index];
 
-        document.getElementById('formTitle').innerText = `Editando: T${ep.season}E${ep.episode} — ${ep.title}`;
-        document.getElementById('saveBtn').innerText = 'Atualizar Episódio';
-        document.getElementById('cancelEditBtn').style.display = 'block';
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById(
+            'editIndex'
+        ).value = index;
+
+
+        document.getElementById(
+            'season'
+        ).value = ep.season;
+
+
+        document.getElementById(
+            'episode'
+        ).value = ep.episode;
+
+
+        document.getElementById(
+            'episodeTitle'
+        ).value = ep.title;
+
+
+        document.getElementById(
+            'date'
+        ).value = ep.date;
+
+
+        renderRatingFormInputs(
+            ep.ratings
+        );
+
+
+        document.getElementById(
+            'formTitle'
+        ).innerText =
+            `Editando: T${ep.season}E${ep.episode} — ${ep.title}`;
+
+
+        document.getElementById(
+            'saveBtn'
+        ).innerText =
+            'Atualizar Episódio';
+
+
+        document.getElementById(
+            'cancelEditBtn'
+        ).style.display =
+            'block';
+
+
+        switchTabById('page1');
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
     }
+
+
+    function switchTabById(tabId) {
+
+        document
+            .querySelectorAll('.tab-content')
+            .forEach(el => {
+
+                el.classList.remove(
+                    'active'
+                );
+
+            });
+
+
+        document
+            .querySelectorAll('.sidebar-btn')
+            .forEach(el => {
+
+                el.classList.remove(
+                    'active'
+                );
+
+            });
+
+
+        const page =
+            document.getElementById(
+                tabId
+            );
+
+
+        if (page) {
+            page.classList.add('active');
+        }
+
+
+        const button =
+            document.querySelector(
+                `.sidebar-btn[onclick*="'${tabId}'"]`
+            );
+
+
+        if (button) {
+            button.classList.add('active');
+        }
+
+    }
+
 
     function cancelEdit() {
-        document.getElementById('editIndex').value = '-1';
-        document.getElementById('episodeForm').reset();
-        document.getElementById('date').valueAsDate = new Date();
-        document.getElementById('formTitle').innerText = 'Registro de Notas por Episódio';
-        document.getElementById('saveBtn').innerText = 'Salvar Avaliações do Episódio';
-        document.getElementById('cancelEditBtn').style.display = 'none';
+
+        document.getElementById(
+            'editIndex'
+        ).value = '-1';
+
+
+        document.getElementById(
+            'episodeForm'
+        ).reset();
+
+
+        document.getElementById(
+            'date'
+        ).valueAsDate =
+            new Date();
+
+
+        document.getElementById(
+            'formTitle'
+        ).innerText =
+            'Registro de Notas por Episódio';
+
+
+        document.getElementById(
+            'saveBtn'
+        ).innerText =
+            'Salvar Avaliações do Episódio';
+
+
+        document.getElementById(
+            'cancelEditBtn'
+        ).style.display =
+            'none';
+
+
         renderRatingFormInputs();
+
     }
 
-    // --- MODAL DE DETALHES ---
+
+    /* ==========================================
+       MODAL
+    =========================================== */
+
     function openEpisodeModal(index) {
-        const ep = episodes[index];
-        const ratingsArr = Object.values(ep.ratings || {});
-        let charScores = ratingsArr.map(r => r.score);
-        let charAvg = charScores.length > 0 ? (charScores.reduce((a,b)=>a+b,0)/charScores.length).toFixed(1) : 'N/A';
-        let maxScore = charScores.length > 0 ? Math.max(...charScores) : 'N/A';
-        let minScore = charScores.length > 0 ? Math.min(...charScores) : 'N/A';
+
+        const ep =
+            episodes[index];
+
+
+        const ratingsArr =
+            Object.values(
+                ep.ratings || {}
+            );
+
+
+        let charScores =
+            ratingsArr.map(
+                r => r.score
+            );
+
+
+        let charAvg =
+            charScores.length > 0
+                ? (
+                    charScores.reduce(
+                        (a,b) => a+b,
+                        0
+                    ) /
+                    charScores.length
+                ).toFixed(1)
+                : 'N/A';
+
+
+        let maxScore =
+            charScores.length > 0
+                ? Math.max(...charScores)
+                : 'N/A';
+
+
+        let minScore =
+            charScores.length > 0
+                ? Math.min(...charScores)
+                : 'N/A';
+
 
         let charsListHtml = '';
+
+
         characters.forEach(char => {
-            let sc = (ep.ratings && ep.ratings[char.id]) ? `Nota ${ep.ratings[char.id].score}` : '<span style="color:var(--text-muted)">Não avaliado</span>';
+
+            let sc =
+                (
+                    ep.ratings &&
+                    ep.ratings[char.id]
+                )
+                    ? `Nota ${ep.ratings[char.id].score}`
+                    : `<span style="color:var(--text-muted)">
+                        Não avaliado
+                       </span>`;
+
+
             charsListHtml += `
+
                 <div class="modal-char-item">
-                    <span>${char.name}</span>
-                    <strong>${sc}</strong>
+
+                    <span>
+                        ${char.name}
+                    </span>
+
+                    <strong>
+                        ${sc}
+                    </strong>
+
                 </div>
+
             `;
+
         });
 
-        document.getElementById('modalBodyContent').innerHTML = `
+
+        document.getElementById(
+            'modalBodyContent'
+        ).innerHTML = `
+
             <div class="modal-header-info">
-                <span class="badge-tag">Temporada ${ep.season} • Episódio ${ep.episode}</span>
-                <h2 style="font-size: 1.8rem; margin: 8px 0; font-family: 'Outfit', sans-serif;">${ep.title}</h2>
-                <p style="color: var(--text-muted);">Data assistida: ${ep.date}</p>
+
+                <span class="badge-tag">
+
+                    Temporada ${ep.season}
+                    • Episódio ${ep.episode}
+
+                </span>
+
+
+                <h2
+                    style="
+                        font-size:1.8rem;
+                        margin:8px 0;
+                        font-family:'Outfit',sans-serif;
+                    ">
+
+                    ${ep.title}
+
+                </h2>
+
+
+                <p
+                    style="
+                        color:var(--text-muted);
+                    ">
+
+                    Data assistida:
+                    ${ep.date}
+
+                </p>
+
             </div>
+
 
             <div class="modal-stats-grid">
+
                 <div class="stat-box">
-                    <span>Média do Ep.</span>
-                    <strong>⭐ ${ep.generalScore.toFixed(1)}/10</strong>
+
+                    <span>
+                        Média do Ep.
+                    </span>
+
+                    <strong>
+                        ⭐ ${Number(ep.generalScore).toFixed(1)}/10
+                    </strong>
+
                 </div>
+
+
                 <div class="stat-box">
-                    <span>Média Personagens</span>
-                    <strong>👥 ${charAvg}</strong>
+
+                    <span>
+                        Média Personagens
+                    </span>
+
+                    <strong>
+                        👥 ${charAvg}
+                    </strong>
+
                 </div>
+
+
                 <div class="stat-box">
-                    <span>Maior Nota</span>
-                    <strong>📈 ${maxScore}</strong>
+
+                    <span>
+                        Maior Nota
+                    </span>
+
+                    <strong>
+                        📈 ${maxScore}
+                    </strong>
+
                 </div>
+
+
                 <div class="stat-box">
-                    <span>Menor Nota</span>
-                    <strong>📉 ${minScore}</strong>
+
+                    <span>
+                        Menor Nota
+                    </span>
+
+                    <strong>
+                        📉 ${minScore}
+                    </strong>
+
                 </div>
+
             </div>
 
-            <h3 style="margin-bottom: 15px; font-size: 1.1rem; font-family: 'Outfit', sans-serif;">Notas dos Personagens</h3>
+
+            <h3
+                style="
+                    margin-bottom:15px;
+                    font-size:1.1rem;
+                    font-family:'Outfit',sans-serif;
+                ">
+
+                Notas dos Personagens
+
+            </h3>
+
+
             <div class="modal-characters-list">
+
                 ${charsListHtml}
+
             </div>
 
-            <div style="display: flex; gap: 12px; margin-top: 30px;">
-                <button class="btn-main" onclick="closeModal(); editEpisode(${index});">Editar Episódio</button>
-                <button class="btn-main" style="background: #ef4444;" onclick="closeModal(); deleteEpisode(${index});">Excluir Episódio</button>
+
+            <div
+                style="
+                    display:flex;
+                    gap:12px;
+                    margin-top:30px;
+                ">
+
+                <button
+                    class="btn-main"
+                    onclick="
+                        closeModal();
+                        editEpisode(${index});
+                    ">
+
+                    Editar Episódio
+
+                </button>
+
+
+                <button
+                    class="btn-main"
+                    style="
+                        background:#ef4444;
+                    "
+                    onclick="
+                        closeModal();
+                        deleteEpisode(${index});
+                    ">
+
+                    Excluir Episódio
+
+                </button>
+
             </div>
+
         `;
 
-        document.getElementById('episodeModal').classList.add('active');
+
+        document
+            .getElementById(
+                'episodeModal'
+            )
+            .classList.add('active');
+
     }
+
 
     function closeModal() {
-        document.getElementById('episodeModal').classList.remove('active');
+
+        document
+            .getElementById(
+                'episodeModal'
+            )
+            .classList.remove('active');
+
     }
+
 
     function closeModalOnOutside(e) {
-        if(e.target.id === 'episodeModal') closeModal();
+
+        if (
+            e.target.id ===
+            'episodeModal'
+        ) {
+
+            closeModal();
+
+        }
+
     }
 
-    // --- GRÁFICOS E ESTATÍSTICAS ---
+
+    /* ==========================================
+       GRÁFICOS
+    =========================================== */
+
     function initChartFilters() {
-        const charSelect = document.getElementById('chartFilterChar');
-        charSelect.innerHTML = '<option value="all">Todos</option>';
+
+        const charSelect =
+            document.getElementById(
+                'chartFilterChar'
+            );
+
+
+        charSelect.innerHTML =
+            '<option value="all">Todos</option>';
+
+
         characters.forEach(c => {
-            charSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+
+            charSelect.innerHTML += `
+
+                <option value="${c.id}">
+                    ${c.name}
+                </option>
+
+            `;
+
         });
+
     }
+
 
     function updateChart() {
-        const chartType = document.getElementById('chartTypeSelect').value;
-        const charFilterVal = document.getElementById('chartFilterChar').value;
-        const seasonFilter = document.getElementById('chartFilterSeason').value;
 
-        const ctx = document.getElementById('advancedChart').getContext('2d');
-        const rankingContainer = document.getElementById('rankingTableContainer');
+        const chartType =
+            document.getElementById(
+                'chartTypeSelect'
+            ).value;
+
+
+        const charFilterVal =
+            document.getElementById(
+                'chartFilterChar'
+            ).value;
+
+
+        const seasonFilter =
+            document.getElementById(
+                'chartFilterSeason'
+            ).value;
+
+
+        const ctx =
+            document.getElementById(
+                'advancedChart'
+            ).getContext('2d');
+
+
+        const rankingContainer =
+            document.getElementById(
+                'rankingTableContainer'
+            );
+
+
         rankingContainer.innerHTML = '';
 
-        if (myChart) myChart.destroy();
 
-        let filteredEpisodes = [...episodes].sort((a,b) => (a.season - b.season) || (a.episode - b.episode));
-        if (seasonFilter !== 'all') {
-            filteredEpisodes = filteredEpisodes.filter(e => e.season == seasonFilter);
+        if (myChart) {
+
+            myChart.destroy();
+
+            myChart = null;
+
         }
+
+
+        let filteredEpisodes =
+            [...episodes]
+            .sort(
+                (a,b) =>
+                    (a.season - b.season) ||
+                    (a.episode - b.episode)
+            );
+
+
+        if (
+            seasonFilter !== 'all'
+        ) {
+
+            filteredEpisodes =
+                filteredEpisodes.filter(
+                    e =>
+                        e.season ==
+                        seasonFilter
+                );
+
+        }
+
 
         let labels = [];
         let datasets = [];
 
+
         const colors = [
-            '#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', 
-            '#06b6d4', '#ec4899', '#6366f1', '#eab308', '#64748b'
+            '#f43f5e',
+            '#3b82f6',
+            '#10b981',
+            '#f59e0b',
+            '#8b5cf6',
+            '#06b6d4',
+            '#ec4899',
+            '#6366f1',
+            '#eab308',
+            '#64748b'
         ];
 
+
         switch(chartType) {
+
+            /* -------------------------
+               EVOLUÇÃO
+            ------------------------- */
+
             case 'char-evolution': {
-                labels = filteredEpisodes.map(ep => `T${ep.season}E${ep.episode}`);
-                if (charFilterVal === 'all') {
-                    characters.forEach((char, idx) => {
-                        let dataPoints = filteredEpisodes.map(ep => (ep.ratings && ep.ratings[char.id]) ? ep.ratings[char.id].score : null);
-                        datasets.push({
-                            label: char.name,
-                            data: dataPoints,
-                            borderColor: colors[idx % colors.length],
-                            backgroundColor: 'transparent',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            spanGaps: true
-                        });
-                    });
+
+                labels =
+                    filteredEpisodes.map(
+                        ep =>
+                            `T${ep.season}E${ep.episode}`
+                    );
+
+
+                if (
+                    charFilterVal === 'all'
+                ) {
+
+                    characters.forEach(
+                        (char, idx) => {
+
+                            let dataPoints =
+                                filteredEpisodes.map(
+                                    ep =>
+                                        (
+                                            ep.ratings &&
+                                            ep.ratings[char.id]
+                                        )
+                                            ? ep.ratings[char.id].score
+                                            : null
+                                );
+
+
+                            datasets.push({
+
+                                label: char.name,
+
+                                data: dataPoints,
+
+                                borderColor:
+                                    colors[
+                                        idx %
+                                        colors.length
+                                    ],
+
+                                backgroundColor:
+                                    'transparent',
+
+                                borderWidth: 2,
+
+                                tension: 0.3,
+
+                                spanGaps: true
+
+                            });
+
+                        }
+                    );
+
                 } else {
-                    const charId = parseInt(charFilterVal);
-                    const char = characters.find(c => c.id === charId);
-                    const dataPoints = filteredEpisodes.map(ep => (ep.ratings && ep.ratings[charId]) ? ep.ratings[charId].score : null);
+
+                    const charId =
+                        parseInt(
+                            charFilterVal
+                        );
+
+
+                    const char =
+                        characters.find(
+                            c =>
+                                c.id === charId
+                        );
+
+
+                    const dataPoints =
+                        filteredEpisodes.map(
+                            ep =>
+                                (
+                                    ep.ratings &&
+                                    ep.ratings[charId]
+                                )
+                                    ? ep.ratings[charId].score
+                                    : null
+                        );
+
 
                     datasets.push({
-                        label: char ? char.name : 'Personagem',
+
+                        label:
+                            char
+                                ? char.name
+                                : 'Personagem',
+
                         data: dataPoints,
-                        borderColor: '#f43f5e',
-                        backgroundColor: 'rgba(244, 63, 94, 0.1)',
+
+                        borderColor:
+                            '#f43f5e',
+
+                        backgroundColor:
+                            'rgba(244, 63, 94, 0.1)',
+
                         borderWidth: 3,
+
                         pointRadius: 5,
+
                         fill: true,
+
                         tension: 0.3,
+
                         spanGaps: true
+
                     });
+
                 }
+
                 break;
             }
+
+
+            /* -------------------------
+               BARRAS DE MÉDIA
+            ------------------------- */
+
             case 'char-avg-bar': {
-                let targetChars = charFilterVal === 'all' ? characters : characters.filter(c => c.id == charFilterVal);
-                let charAvgs = targetChars.map(char => {
-                    let scores = [];
-                    filteredEpisodes.forEach(ep => {
-                        if(ep.ratings && ep.ratings[char.id]) scores.push(ep.ratings[char.id].score);
-                    });
-                    let avg = scores.length > 0 ? scores.reduce((a,b)=>a+b,0)/scores.length : 0;
-                    return { name: char.name, avg: parseFloat(avg.toFixed(2)) };
+
+                let targetChars =
+                    charFilterVal === 'all'
+                        ? characters
+                        : characters.filter(
+                            c =>
+                                c.id ==
+                                charFilterVal
+                        );
+
+
+                let charAvgs =
+                    targetChars.map(
+                        char => {
+
+                            let scores = [];
+
+
+                            filteredEpisodes.forEach(
+                                ep => {
+
+                                    if (
+                                        ep.ratings &&
+                                        ep.ratings[char.id]
+                                    ) {
+
+                                        scores.push(
+                                            ep.ratings[char.id].score
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+
+                            let avg =
+                                scores.length > 0
+                                    ? scores.reduce(
+                                        (a,b) => a+b,
+                                        0
+                                    ) /
+                                    scores.length
+                                    : 0;
+
+
+                            return {
+
+                                name: char.name,
+
+                                avg:
+                                    parseFloat(
+                                        avg.toFixed(2)
+                                    )
+
+                            };
+
+                        }
+                    );
+
+
+                labels =
+                    charAvgs.map(
+                        c => c.name
+                    );
+
+
+                datasets.push({
+
+                    label:
+                        'Nota Média por Personagem',
+
+                    data:
+                        charAvgs.map(
+                            c => c.avg
+                        ),
+
+                    backgroundColor:
+                        colors,
+
+                    borderRadius: 8
+
                 });
 
-                labels = charAvgs.map(c => c.name);
-                datasets.push({
-                    label: 'Nota Média por Personagem',
-                    data: charAvgs.map(c => c.avg),
-                    backgroundColor: colors,
-                    borderRadius: 8
-                });
+
                 break;
             }
+
+
+            /* -------------------------
+               VÁRIOS PERSONAGENS LINHA
+            ------------------------- */
+
             case 'multi-char-line': {
-                labels = filteredEpisodes.map(ep => `T${ep.season}E${ep.episode}`);
-                let targetChars = charFilterVal === 'all' ? characters : characters.filter(c => c.id == charFilterVal);
-                targetChars.forEach((char, idx) => {
-                    let dataPoints = filteredEpisodes.map(ep => (ep.ratings && ep.ratings[char.id]) ? ep.ratings[char.id].score : null);
-                    datasets.push({
-                        label: char.name,
-                        data: dataPoints,
-                        borderColor: colors[idx % colors.length],
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        spanGaps: true
-                    });
-                });
+
+                labels =
+                    filteredEpisodes.map(
+                        ep =>
+                            `T${ep.season}E${ep.episode}`
+                    );
+
+
+                let targetChars =
+                    charFilterVal === 'all'
+                        ? characters
+                        : characters.filter(
+                            c =>
+                                c.id ==
+                                charFilterVal
+                        );
+
+
+                targetChars.forEach(
+                    (char, idx) => {
+
+                        let dataPoints =
+                            filteredEpisodes.map(
+                                ep =>
+                                    (
+                                        ep.ratings &&
+                                        ep.ratings[char.id]
+                                    )
+                                        ? ep.ratings[char.id].score
+                                        : null
+                            );
+
+
+                        datasets.push({
+
+                            label: char.name,
+
+                            data: dataPoints,
+
+                            borderColor:
+                                colors[
+                                    idx %
+                                    colors.length
+                                ],
+
+                            backgroundColor:
+                                'transparent',
+
+                            borderWidth: 2,
+
+                            tension: 0.3,
+
+                            spanGaps: true
+
+                        });
+
+                    }
+                );
+
+
                 break;
             }
+
+
+            /* -------------------------
+               VÁRIOS PERSONAGENS BARRAS
+            ------------------------- */
+
             case 'multi-char-bar': {
-                let targetChars = charFilterVal === 'all' ? characters : characters.filter(c => c.id == charFilterVal);
-                let charAvgs = targetChars.map(char => {
-                    let scores = [];
-                    filteredEpisodes.forEach(ep => {
-                        if(ep.ratings && ep.ratings[char.id]) scores.push(ep.ratings[char.id].score);
-                    });
-                    let avg = scores.length > 0 ? scores.reduce((a,b)=>a+b,0)/scores.length : 0;
-                    return { name: char.name, avg: parseFloat(avg.toFixed(2)) };
+
+                let targetChars =
+                    charFilterVal === 'all'
+                        ? characters
+                        : characters.filter(
+                            c =>
+                                c.id ==
+                                charFilterVal
+                        );
+
+
+                let charAvgs =
+                    targetChars.map(
+                        char => {
+
+                            let scores = [];
+
+
+                            filteredEpisodes.forEach(
+                                ep => {
+
+                                    if (
+                                        ep.ratings &&
+                                        ep.ratings[char.id]
+                                    ) {
+
+                                        scores.push(
+                                            ep.ratings[char.id].score
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+
+                            let avg =
+                                scores.length > 0
+                                    ? scores.reduce(
+                                        (a,b) => a+b,
+                                        0
+                                    ) /
+                                    scores.length
+                                    : 0;
+
+
+                            return {
+
+                                name:
+                                    char.name,
+
+                                avg:
+                                    parseFloat(
+                                        avg.toFixed(2)
+                                    )
+
+                            };
+
+                        }
+                    );
+
+
+                labels =
+                    charAvgs.map(
+                        c => c.name
+                    );
+
+
+                datasets.push({
+
+                    label:
+                        'Média Consolidada dos Personagens',
+
+                    data:
+                        charAvgs.map(
+                            c => c.avg
+                        ),
+
+                    backgroundColor:
+                        '#3b82f6',
+
+                    borderRadius: 8
+
                 });
 
-                labels = charAvgs.map(c => c.name);
-                datasets.push({
-                    label: 'Média Consolidada dos Personagens',
-                    data: charAvgs.map(c => c.avg),
-                    backgroundColor: '#3b82f6',
-                    borderRadius: 8
-                });
+
                 break;
             }
-            case 'ranking-chars': {
-                let charAvgs = characters.map(char => {
-                    let scores = [];
-                    episodes.forEach(ep => {
-                        if(ep.ratings && ep.ratings[char.id]) scores.push(ep.ratings[char.id].score);
-                    });
-                    let avg = scores.length > 0 ? scores.reduce((a,b)=>a+b,0)/scores.length : 0;
-                    return { name: char.name, avg: parseFloat(avg.toFixed(2)), count: scores.length };
-                }).sort((a,b) => b.avg - a.avg);
 
-                let html = `<h2>🏆 Ranking de Melhores Personagens</h2><table><thead><tr><th>Posição</th><th>Personagem</th><th>Média</th><th>Avaliações</th></tr></thead><tbody>`;
-                charAvgs.forEach((c, idx) => {
-                    html += `<tr><td><strong>#${idx+1}</strong></td><td>${c.name}</td><td>⭐ ${c.avg}</td><td>${c.count}</td></tr>`;
-                });
-                html += `</tbody></table>`;
-                rankingContainer.innerHTML = html;
-                document.querySelector('.chart-container').style.display = 'none';
+
+            /* -------------------------
+               RANKING
+            ------------------------- */
+
+            case 'ranking-chars': {
+
+                let charAvgs =
+                    characters.map(
+                        char => {
+
+                            let scores = [];
+
+
+                            episodes.forEach(
+                                ep => {
+
+                                    if (
+                                        ep.ratings &&
+                                        ep.ratings[char.id]
+                                    ) {
+
+                                        scores.push(
+                                            ep.ratings[char.id].score
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+
+                            let avg =
+                                scores.length > 0
+                                    ? scores.reduce(
+                                        (a,b) => a+b,
+                                        0
+                                    ) /
+                                    scores.length
+                                    : 0;
+
+
+                            return {
+
+                                name:
+                                    char.name,
+
+                                avg:
+                                    parseFloat(
+                                        avg.toFixed(2)
+                                    ),
+
+                                count:
+                                    scores.length
+
+                            };
+
+                        }
+                    )
+                    .sort(
+                        (a,b) =>
+                            b.avg - a.avg
+                    );
+
+
+                let html = `
+
+                    <h2>
+                        🏆 Ranking de Melhores Personagens
+                    </h2>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Posição
+                                </th>
+
+                                <th>
+                                    Personagem
+                                </th>
+
+                                <th>
+                                    Média
+                                </th>
+
+                                <th>
+                                    Avaliações
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                `;
+
+
+                charAvgs.forEach(
+                    (c, idx) => {
+
+                        html += `
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        #${idx + 1}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    ${c.name}
+                                </td>
+
+                                <td>
+                                    ⭐ ${c.avg}
+                                </td>
+
+                                <td>
+                                    ${c.count}
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                );
+
+
+                html += `
+
+                        </tbody>
+
+                    </table>
+
+                `;
+
+
+                rankingContainer.innerHTML =
+                    html;
+
+
+                document
+                    .querySelector(
+                        '.chart-container'
+                    )
+                    .style.display =
+                    'none';
+
+
                 return;
+
             }
+
         }
 
-        document.querySelector('.chart-container').style.display = 'block';
-        myChart = new Chart(ctx, {
-            type: chartType.includes('bar') ? 'bar' : 'line',
-            data: { labels, datasets },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { min: 0, max: 10, grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: 'var(--text-muted)' } },
-                    x: { grid: { display: false }, ticks: { color: 'var(--text-muted)' } }
-                },
-                plugins: {
-                    legend: { labels: { color: 'var(--text-main)', font: { family: 'Inter' } } }
+
+        document
+            .querySelector(
+                '.chart-container'
+            )
+            .style.display =
+            'block';
+
+
+        myChart =
+            new Chart(
+                ctx,
+                {
+
+                    type:
+                        chartType.includes('bar')
+                            ? 'bar'
+                            : 'line',
+
+                    data: {
+                        labels,
+                        datasets
+                    },
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio:
+                            false,
+
+                        scales: {
+
+                            y: {
+
+                                min: 0,
+
+                                max: 10,
+
+                                grid: {
+
+                                    color:
+                                        'rgba(255,255,255,0.04)'
+
+                                },
+
+                                ticks: {
+
+                                    color:
+                                        'var(--text-muted)'
+
+                                }
+
+                            },
+
+                            x: {
+
+                                grid: {
+
+                                    display: false
+
+                                },
+
+                                ticks: {
+
+                                    color:
+                                        'var(--text-muted)'
+
+                                }
+
+                            }
+
+                        },
+
+                        plugins: {
+
+                            legend: {
+
+                                labels: {
+
+                                    color:
+                                        'var(--text-main)',
+
+                                    font: {
+
+                                        family:
+                                            'Inter'
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
                 }
-            }
-        });
+            );
+
     }
 
-    // Inicialização ao carregar a página
+
+    /* ==========================================
+       INICIALIZAÇÃO
+    =========================================== */
+
     renderCharacters();
+
     renderEpisodesHistory();
+
+    loadSidebarState();
+
 </script>
 
 </body>
