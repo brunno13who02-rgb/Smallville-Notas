@@ -1595,334 +1595,297 @@
             }
         }
         
-       /* =========================================
-   SELETOR DE PERSONAGENS
-========================================= */
+       /* =========================================================
+   FILTRO DE PERSONAGENS — DROPDOWN MODERNO
+========================================================= */
 
-.character-selector-btn {
+.character-filter-dropdown {
+    position: relative;
     width: 100%;
-    min-height: 58px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: var(--bg-input);
-    color: var(--text-main);
-    cursor: pointer;
-    text-align: left;
-    transition: background .2s ease, border-color .2s ease, transform .15s ease;
 }
 
-.character-selector-btn:hover {
-    border-color: var(--primary);
-    background: var(--bg-surface-solid);
-}
+.character-filter-trigger {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
 
-.character-selector-btn:active {
-    transform: scale(.98);
-}
-
-.character-selector-icon {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background: var(--primary);
-    color: white;
-    font-size: 18px;
-    flex-shrink: 0;
-}
-
-.character-selector-content {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    flex: 1;
-}
-
-.character-selector-content strong {
-    font-size: .9rem;
-    font-weight: 700;
-}
-
-.character-selector-content small {
-    color: var(--text-muted);
-    font-size: .72rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.character-selector-arrow {
-    font-size: 24px;
-    color: var(--text-muted);
-    flex-shrink: 0;
-}
-
-
-/* =========================================
-   MODAL DE SELEÇÃO
-========================================= */
-
-.character-selector-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-
-    background: rgba(0, 0, 0, .65);
-
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-.character-selector-modal.show {
-    display: flex;
-}
-
-.character-selector-panel {
-    width: min(520px, 100%);
-    max-height: min(680px, 90vh);
-
-    display: flex;
-    flex-direction: column;
-
-    background: var(--bg-surface-solid);
-
-    border: 1px solid var(--border);
-    border-radius: 24px;
-
-    box-shadow:
-        0 25px 80px rgba(0, 0, 0, .45);
-
-    overflow: hidden;
-}
-
-.character-selector-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
-
-    padding: 20px;
-
-    border-bottom: 1px solid var(--border);
-}
-
-.character-selector-header h3 {
-    margin: 0;
-    font-size: 1.05rem;
-}
-
-.character-selector-header p {
-    margin: 4px 0 0;
-    color: var(--text-muted);
-    font-size: .75rem;
-}
-
-.character-selector-close {
-    width: 38px;
-    height: 38px;
-
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    gap: 12px;
 
     background: var(--bg-input);
     color: var(--text-main);
 
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.character-selector-close:hover {
-    background: var(--primary-light);
-    border-color: var(--primary);
-}
-
-.character-selector-list {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 10px;
-
-    padding: 18px;
-
-    overflow-y: auto;
-}
-
-.character-option {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    min-height: 50px;
-
-    padding: 10px 12px;
-
     border: 1px solid var(--border);
-    border-radius: 14px;
-
-    background: var(--bg-input);
-    color: var(--text-main);
+    border-radius: var(--radius-sm);
 
     cursor: pointer;
+    user-select: none;
 
-    transition:
-        background .2s ease,
-        border-color .2s ease,
-        transform .15s ease;
+    transition: var(--transition);
 }
 
-.character-option:hover {
-    border-color: var(--primary);
-}
-
-.character-option.selected {
-    border-color: var(--primary);
-
+.character-filter-trigger:hover {
+    border-color: var(--border-focus);
     background: var(--primary-light);
 }
 
-.character-option:active {
-    transform: scale(.98);
+.character-filter-trigger.open {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
-.character-option input {
-    display: none;
-}
-
-.character-option-check {
-    width: 22px;
-    height: 22px;
-
+.character-filter-trigger-content {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+}
 
-    border: 1px solid var(--border);
-    border-radius: 7px;
-
-    color: transparent;
-
-    font-size: 13px;
-
+.character-filter-icon {
+    font-size: 1.1rem;
     flex-shrink: 0;
 }
 
-.character-option.selected .character-option-check {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-}
-
-.character-option-name {
-    font-size: .82rem;
-    font-weight: 600;
-
+.character-filter-summary {
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    color: var(--text-main);
+    font-weight: 500;
 }
 
-.character-selector-footer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.character-filter-arrow {
+    font-size: .85rem;
+    color: var(--text-muted);
+    transition: transform .25s ease;
+    flex-shrink: 0;
+}
 
-    padding: 15px 18px;
+.character-filter-trigger.open .character-filter-arrow {
+    transform: rotate(180deg);
+}
 
-    border-top: 1px solid var(--border);
+.character-filter-menu {
+    position: absolute;
+    z-index: 2000;
+
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
 
     background: var(--bg-surface-solid);
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, .45),
+        0 0 0 1px rgba(255,255,255,.02);
+
+    padding: 12px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease,
+        visibility .2s ease;
 }
 
-.character-selector-action {
-    padding: 9px 12px;
+.character-filter-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.character-filter-search {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.character-filter-search input {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 12px 0 38px;
+
+    background: var(--bg-input);
+    color: var(--text-main);
 
     border: 1px solid var(--border);
     border-radius: 10px;
 
+    outline: none;
+}
+
+.character-filter-search input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.character-filter-search-icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.character-filter-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.character-filter-action {
+    flex: 1;
+
+    border: 1px solid var(--border);
     background: var(--bg-input);
     color: var(--text-main);
 
-    font-size: .75rem;
+    border-radius: 9px;
+
+    padding: 8px 10px;
+
+    font-size: .78rem;
     font-weight: 600;
 
     cursor: pointer;
+
+    transition: var(--transition);
 }
 
-.character-selector-action:hover {
+.character-filter-action:hover {
     border-color: var(--primary);
+    background: var(--primary-light);
 }
 
-.character-selector-confirm {
-    margin-left: auto;
+.character-filter-list {
+    max-height: 260px;
+    overflow-y: auto;
 
-    padding: 10px 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
-    border: none;
-    border-radius: 11px;
+    padding-right: 3px;
+}
 
-    background: var(--primary);
-    color: white;
+.character-filter-list::-webkit-scrollbar {
+    width: 5px;
+}
 
-    font-size: .78rem;
-    font-weight: 700;
+.character-filter-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.character-filter-list::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}
+
+.character-filter-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 11px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
 
     cursor: pointer;
+    user-select: none;
+
+    color: var(--text-main);
+
+    transition: var(--transition);
 }
 
-.character-selector-confirm:hover {
-    background: var(--primary-hover);
+.character-filter-option:hover {
+    background: var(--primary-light);
+    border-color: var(--border);
 }
 
+.character-filter-option.selected {
+    background: var(--primary-light);
+    border-color: rgba(244, 63, 94, .25);
+}
 
-/* =========================================
-   MOBILE
-========================================= */
+.character-filter-option input {
+    width: 17px;
+    height: 17px;
+
+    margin: 0;
+
+    accent-color: var(--primary);
+
+    flex-shrink: 0;
+}
+
+.character-filter-option-name {
+    flex: 1;
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.character-filter-selected-count {
+    padding-top: 10px;
+    margin-top: 8px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--text-muted);
+
+    font-size: .78rem;
+    text-align: center;
+}
+
+.character-filter-empty {
+    padding: 20px 10px;
+
+    text-align: center;
+
+    color: var(--text-muted);
+    font-size: .85rem;
+}
 
 @media (max-width: 600px) {
 
-    .character-selector-modal {
-        align-items: flex-end;
-        padding: 0;
+    .character-filter-menu {
+        position: fixed;
+
+        left: 12px;
+        right: 12px;
+
+        top: auto;
+        bottom: 12px;
+
+        max-height: 75vh;
+
+        transform: translateY(15px);
     }
 
-    .character-selector-panel {
-        width: 100%;
-        max-height: 85vh;
-
-        border-radius:
-            24px 24px 0 0;
+    .character-filter-menu.active {
+        transform: translateY(0);
     }
 
-    .character-selector-list {
-        grid-template-columns: 1fr;
-    }
-
-    .character-selector-footer {
-        flex-wrap: wrap;
-    }
-
-    .character-selector-confirm {
-        width: 100%;
-        margin-left: 0;
+    .character-filter-list {
+        max-height: 45vh;
     }
 
 }
-        
+
     </style>
 </head>
 
@@ -2258,33 +2221,106 @@
                 </div>
 
 
-                <div id="chartFilterWrapper">
+                <div id="chartFilterWrapper1">
 
     <label>
-        Filtrar Personagens
+        Filtrar Personagem
     </label>
 
-    <button
-        type="button"
-        id="openCharacterSelector"
-        class="character-selector-btn"
-        onclick="openCharacterSelector()"
-    >
-        <span class="character-selector-icon">👤</span>
+    <div class="character-filter-dropdown">
 
-        <span class="character-selector-content">
-            <strong>Escolher personagens</strong>
-            <small id="characterSelectionSummary">
-                Todos os personagens
-            </small>
-        </span>
+        <button
+            type="button"
+            id="characterFilterTrigger"
+            class="character-filter-trigger"
+            onclick="toggleCharacterFilter(event)"
+        >
 
-        <span class="character-selector-arrow">›</span>
-    </button>
+            <span class="character-filter-trigger-content">
 
-    </div>           
- </div>
+                <span class="character-filter-icon">
+                    👥
+                </span>
 
+                <span
+                    id="characterFilterSummary"
+                    class="character-filter-summary"
+                >
+                    Todos os personagens
+                </span>
+
+            </span>
+
+            <span class="character-filter-arrow">
+                ▼
+            </span>
+
+        </button>
+
+
+        <div
+            id="characterFilterMenu"
+            class="character-filter-menu"
+        >
+
+            <div class="character-filter-search">
+
+                <span class="character-filter-search-icon">
+                    🔎
+                </span>
+
+                <input
+                    type="text"
+                    id="characterFilterSearch"
+                    placeholder="Buscar personagem..."
+                    autocomplete="off"
+                    oninput="filterCharacterOptions(this.value)"
+                    onclick="event.stopPropagation()"
+                >
+
+            </div>
+
+
+            <div class="character-filter-actions">
+
+                <button
+                    type="button"
+                    class="character-filter-action"
+                    onclick="selectAllChartCharacters(); event.stopPropagation();"
+                >
+                    ☑ Todos
+                </button>
+
+                <button
+                    type="button"
+                    class="character-filter-action"
+                    onclick="clearChartCharacters(); event.stopPropagation();"
+                >
+                    Limpar
+                </button>
+
+            </div>
+
+
+            <div
+                id="chartCharacterFilter"
+                class="character-filter-list"
+            >
+            </div>
+
+
+            <div
+                id="characterFilterSelectedCount"
+                class="character-filter-selected-count"
+            >
+                Todos os personagens selecionados
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
                 <div id="chartFilterWrapper2">
 
@@ -4001,54 +4037,183 @@
 
     }
 
-/* ==========================================
-   GRÁFICOS
-=========================================== */
+
+
+  /* ==========================================
+   FILTRO DE PERSONAGENS — DROPDOWN
+========================================== */
 
 function initChartFilters() {
 
-    const list =
+    const container =
         document.getElementById(
-            'characterSelectorList'
+            'chartCharacterFilter'
         );
 
-    if (!list) return;
+    if (!container) return;
 
 
-    list.innerHTML =
-        characters.map(char => `
+    container.innerHTML = '';
+
+
+    characters.forEach(char => {
+
+        container.innerHTML += `
 
             <label
-                class="character-option"
-                data-character-id="${char.id}"
+                class="character-filter-option"
+                data-character-name="${char.name.toLowerCase()}"
             >
 
                 <input
                     type="checkbox"
                     class="chart-character-checkbox"
                     value="${char.id}"
-                    onchange="updateCharacterOptionVisual(this)"
+                    onchange="handleCharacterSelectionChange(this)"
                 >
 
-                <span class="character-option-check">
-                    ✓
-                </span>
-
-                <span class="character-option-name">
+                <span class="character-filter-option-name">
                     ${char.name}
                 </span>
 
             </label>
 
-        `).join('');
+        `;
+
+    });
 
 
-    /*
-       Por padrão, todos os personagens
-       começam selecionados.
-    */
+    selectAllChartCharacters();
 
-    selectAllChartCharacters(false);
+}
+
+
+/* ==========================================
+   ABRIR / FECHAR DROPDOWN
+========================================== */
+
+function toggleCharacterFilter(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+
+    const trigger =
+        document.getElementById(
+            'characterFilterTrigger'
+        );
+
+    const menu =
+        document.getElementById(
+            'characterFilterMenu'
+        );
+
+
+    if (!trigger || !menu) return;
+
+
+    const isOpen =
+        menu.classList.contains('active');
+
+
+    if (isOpen) {
+
+        closeCharacterFilter();
+
+    } else {
+
+        menu.classList.add('active');
+        trigger.classList.add('open');
+
+    }
+
+}
+
+
+/* ==========================================
+   FECHAR DROPDOWN
+========================================== */
+
+function closeCharacterFilter() {
+
+    const trigger =
+        document.getElementById(
+            'characterFilterTrigger'
+        );
+
+    const menu =
+        document.getElementById(
+            'characterFilterMenu'
+        );
+
+
+    if (menu) {
+        menu.classList.remove('active');
+    }
+
+
+    if (trigger) {
+        trigger.classList.remove('open');
+    }
+
+}
+
+
+/* ==========================================
+   CLIQUE FORA DO DROPDOWN
+========================================== */
+
+document.addEventListener(
+    'click',
+    function(event) {
+
+        const dropdown =
+            document.querySelector(
+                '.character-filter-dropdown'
+            );
+
+
+        if (
+            dropdown &&
+            !dropdown.contains(event.target)
+        ) {
+
+            closeCharacterFilter();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   SELEÇÃO DE PERSONAGEM
+========================================== */
+
+function handleCharacterSelectionChange(
+    checkbox
+) {
+
+    const option =
+        checkbox.closest(
+            '.character-filter-option'
+        );
+
+
+    if (option) {
+
+        option.classList.toggle(
+            'selected',
+            checkbox.checked
+        );
+
+    }
+
+
+    updateCharacterFilterSummary();
+
+    updateChart();
 
 }
 
@@ -4065,163 +4230,14 @@ function getSelectedCharacterIds() {
         );
 
 
-    return Array.from(checkboxes)
-        .map(input =>
-            Number(input.value)
-        );
-
-}
-
-
-/* ==========================================
-   ABRIR SELETOR
-========================================== */
-
-function openCharacterSelector() {
-
-    const modal =
-        document.getElementById(
-            'characterSelectorModal'
-        );
-
-
-    if (!modal) return;
-
-
-    modal.classList.add('show');
-
-}
-
-
-/* ==========================================
-   FECHAR SELETOR
-========================================== */
-
-function closeCharacterSelector() {
-
-    const modal =
-        document.getElementById(
-            'characterSelectorModal'
-        );
-
-
-    if (!modal) return;
-
-
-    modal.classList.remove('show');
-
-}
-
-
-/* ==========================================
-   FECHAR CLICANDO FORA
-========================================== */
-
-function closeCharacterSelectorOutside(event) {
-
-    if (
-        event.target &&
-        event.target.id ===
-            'characterSelectorModal'
-    ) {
-
-        closeCharacterSelector();
-
-    }
-
-}
-
-
-/* ==========================================
-   ATUALIZAR VISUAL DA OPÇÃO
-========================================== */
-
-function updateCharacterOptionVisual(input) {
-
-    const option =
-        input.closest(
-            '.character-option'
-        );
-
-
-    if (!option) return;
-
-
-    option.classList.toggle(
-        'selected',
-        input.checked
-    );
-
-}
-
-
-/* ==========================================
-   RESUMO DA SELEÇÃO
-========================================== */
-
-function updateCharacterSelectionSummary() {
-
-    const summary =
-        document.getElementById(
-            'characterSelectionSummary'
-        );
-
-
-    if (!summary) return;
-
-
-    const selectedIds =
-        getSelectedCharacterIds();
-
-
-    if (selectedIds.length === 0) {
-
-        summary.textContent =
-            'Nenhum personagem selecionado';
-
-        return;
-
-    }
-
-
-    if (
-        selectedIds.length ===
-        characters.length
-    ) {
-
-        summary.textContent =
-            'Todos os personagens';
-
-        return;
-
-    }
-
-
-    const selectedCharacters =
-        characters.filter(char =>
-            selectedIds.includes(
-                Number(char.id)
+    return Array.from(
+        checkboxes
+    ).map(
+        checkbox =>
+            parseInt(
+                checkbox.value
             )
-        );
-
-
-    const names =
-        selectedCharacters.map(
-            char => char.name
-        );
-
-
-    if (names.length <= 2) {
-
-        summary.textContent =
-            names.join(', ');
-
-    } else {
-
-        summary.textContent =
-            `${names[0]}, ${names[1]} +${names.length - 2}`;
-
-    }
+    );
 
 }
 
@@ -4230,33 +4246,37 @@ function updateCharacterSelectionSummary() {
    SELECIONAR TODOS
 ========================================== */
 
-function selectAllChartCharacters(
-    update = true
-) {
+function selectAllChartCharacters() {
 
     document
         .querySelectorAll(
             '.chart-character-checkbox'
         )
-        .forEach(input => {
+        .forEach(checkbox => {
 
-            input.checked = true;
+            checkbox.checked = true;
 
-            updateCharacterOptionVisual(
-                input
-            );
+
+            const option =
+                checkbox.closest(
+                    '.character-filter-option'
+                );
+
+
+            if (option) {
+
+                option.classList.add(
+                    'selected'
+                );
+
+            }
 
         });
 
 
-    updateCharacterSelectionSummary();
+    updateCharacterFilterSummary();
 
-
-    if (update) {
-
-        updateChart();
-
-    }
+    updateChart();
 
 }
 
@@ -4271,34 +4291,29 @@ function clearChartCharacters() {
         .querySelectorAll(
             '.chart-character-checkbox'
         )
-        .forEach(input => {
+        .forEach(checkbox => {
 
-            input.checked = false;
+            checkbox.checked = false;
 
-            updateCharacterOptionVisual(
-                input
-            );
+
+            const option =
+                checkbox.closest(
+                    '.character-filter-option'
+                );
+
+
+            if (option) {
+
+                option.classList.remove(
+                    'selected'
+                );
+
+            }
 
         });
 
 
-    updateCharacterSelectionSummary();
-
-
-    updateChart();
-
-}
-
-
-/* ==========================================
-   CONFIRMAR SELEÇÃO
-========================================== */
-
-function confirmCharacterSelection() {
-
-    updateCharacterSelectionSummary();
-
-    closeCharacterSelector();
+    updateCharacterFilterSummary();
 
     updateChart();
 
@@ -4306,451 +4321,548 @@ function confirmCharacterSelection() {
 
 
 /* ==========================================
-   ATUALIZAR GRÁFICO
+   ATUALIZAR TEXTO DO BOTÃO
 ========================================== */
 
-function updateChart() {
+function updateCharacterFilterSummary() {
 
-    const chartType =
-        document.getElementById(
-            'chartTypeSelect'
-        ).value;
-
-
-    const selectedCharIds =
+    const selectedIds =
         getSelectedCharacterIds();
 
 
-    const seasonFilter =
+    const summary =
         document.getElementById(
-            'chartFilterSeason'
-        ).value;
-
-
-    const canvas =
-        document.getElementById(
-            'advancedChart'
+            'characterFilterSummary'
         );
 
 
-    if (!canvas) return;
-
-
-    const ctx =
-        canvas.getContext('2d');
-
-
-    const rankingContainer =
+    const count =
         document.getElementById(
-            'rankingTableContainer'
+            'characterFilterSelectedCount'
         );
 
 
-    if (!rankingContainer) return;
+    if (!summary) return;
 
 
-    rankingContainer.innerHTML = '';
+    if (
+        selectedIds.length === 0
+    ) {
 
+        summary.textContent =
+            'Nenhum personagem';
 
-    if (myChart) {
+        if (count) {
 
-        myChart.destroy();
+            count.textContent =
+                'Nenhum personagem selecionado';
 
-        myChart = null;
+        }
+
+        return;
 
     }
 
 
-    /*
-       FILTRO DE TEMPORADA
-    */
+    if (
+        selectedIds.length ===
+        characters.length
+    ) {
 
-    let filteredEpisodes =
-        [...episodes]
+        summary.textContent =
+            'Todos os personagens';
+
+        if (count) {
+
+            count.textContent =
+                `${characters.length} personagens selecionados`;
+
+        }
+
+        return;
+
+    }
+
+
+    const selectedCharacters =
+        characters.filter(
+            char =>
+                selectedIds.includes(
+                    char.id
+                )
+        );
+
+
+    if (
+        selectedCharacters.length === 1
+    ) {
+
+        summary.textContent =
+            selectedCharacters[0].name;
+
+    } else if (
+        selectedCharacters.length === 2
+    ) {
+
+        summary.textContent =
+            selectedCharacters
+                .map(char => char.name)
+                .join(' + ');
+
+    } else {
+
+        summary.textContent =
+            `${selectedCharacters[0].name} + ${selectedCharacters.length - 1} outros`;
+
+    }
+
+
+    if (count) {
+
+        count.textContent =
+            `${selectedCharacters.length} personagens selecionados`;
+
+    }
+
+}
+
+
+/* ==========================================
+   PESQUISA DE PERSONAGENS
+========================================== */
+
+function filterCharacterOptions(searchTerm) {
+
+    const term =
+        searchTerm
+            .toLowerCase()
+            .trim();
+
+
+    const options =
+        document.querySelectorAll(
+            '.character-filter-option'
+        );
+
+
+    let visibleCount = 0;
+
+
+    options.forEach(option => {
+
+        const name =
+            option.dataset.characterName || '';
+
+
+        const matches =
+            name.includes(term);
+
+
+        option.style.display =
+            matches
+                ? 'flex'
+                : 'none';
+
+
+        if (matches) {
+            visibleCount++;
+        }
+
+    });
+
+
+    const container =
+        document.getElementById(
+            'chartCharacterFilter'
+        );
+
+
+    if (!container) return;
+
+
+    let empty =
+        container.querySelector(
+            '.character-filter-empty'
+        );
+
+
+    if (
+        visibleCount === 0
+    ) {
+
+        if (!empty) {
+
+            empty =
+                document.createElement(
+                    'div'
+                );
+
+            empty.className =
+                'character-filter-empty';
+
+            empty.textContent =
+                'Nenhum personagem encontrado.';
+
+            container.appendChild(
+                empty
+            );
+
+        }
+
+    } else if (empty) {
+
+        empty.remove();
+
+    }
+
+}
+  
+    function updateChart() {
+
+       const chartType =
+    document.getElementById(
+        'chartTypeSelect'
+    ).value;
+
+
+const selectedCharacterIds =
+    getSelectedCharacterIds();
+
+
+const seasonFilter =
+    document.getElementById(
+        'chartFilterSeason'
+    ).value;
+
+
+        const ctx =
+            document.getElementById(
+                'advancedChart'
+            ).getContext('2d');
+
+
+        const rankingContainer =
+            document.getElementById(
+                'rankingTableContainer'
+            );
+
+
+        rankingContainer.innerHTML = '';
+
+
+        if (myChart) {
+
+            myChart.destroy();
+
+            myChart = null;
+
+        }
+
+
+        let filteredEpisodes =
+            [...episodes]
             .sort(
-                (a, b) =>
+                (a,b) =>
                     (a.season - b.season) ||
                     (a.episode - b.episode)
             );
 
 
-    if (
-        seasonFilter !== 'all'
-    ) {
+        if (
+            seasonFilter !== 'all'
+        ) {
 
-        filteredEpisodes =
-            filteredEpisodes.filter(
-                ep =>
-                    Number(ep.season) ===
-                    Number(seasonFilter)
-            );
+            filteredEpisodes =
+                filteredEpisodes.filter(
+                    e =>
+                        e.season ==
+                        seasonFilter
+                );
 
-    }
-
-
-    let labels = [];
-
-    let datasets = [];
+        }
 
 
-    const colors = [
-        '#f43f5e',
-        '#3b82f6',
-        '#10b981',
-        '#f59e0b',
-        '#8b5cf6',
-        '#06b6d4',
-        '#ec4899',
-        '#6366f1',
-        '#eab308',
-        '#64748b'
-    ];
+        let labels = [];
+        let datasets = [];
 
 
-    /*
-       PERSONAGENS SELECIONADOS
-    */
+        const colors = [
+            '#f43f5e',
+            '#3b82f6',
+            '#10b981',
+            '#f59e0b',
+            '#8b5cf6',
+            '#06b6d4',
+            '#ec4899',
+            '#6366f1',
+            '#eab308',
+            '#64748b'
+        ];
 
-    const selectedCharacters =
-        characters.filter(char =>
-            selectedCharIds.includes(
-                Number(char.id)
-            )
+
+        switch(chartType) {
+
+           /* -------------------------
+   EVOLUÇÃO
+------------------------- */
+
+case 'char-evolution': {
+
+    labels =
+        filteredEpisodes.map(
+            ep =>
+                `T${ep.season}E${ep.episode}`
         );
 
 
-    /* ==========================================
-       EVOLUÇÃO DOS PERSONAGENS
-    =========================================== */
+    const targetChars =
+        characters.filter(
+            char =>
+                selectedCharacterIds.includes(
+                    char.id
+                )
+        );
 
-    
-    switch (chartType) {
 
-        case 'char-evolution': {
+    targetChars.forEach(
+        (char, idx) => {
 
-            labels =
+            const dataPoints =
                 filteredEpisodes.map(
                     ep =>
-                        `T${ep.season}E${ep.episode}`
-                );
-
-
-            selectedCharacters.forEach(
-                (char, idx) => {
-
-                    const dataPoints =
-                        filteredEpisodes.map(
-                            ep =>
-                                (
-                                    ep.ratings &&
-                                    ep.ratings[char.id]
-                                )
-                                    ? ep.ratings[char.id].score
-                                    : null
-                        );
-
-
-                    datasets.push({
-
-                        label: char.name,
-
-                        data: dataPoints,
-
-                        borderColor:
-                            colors[
-                                idx %
-                                colors.length
-                            ],
-
-                        backgroundColor:
-                            'transparent',
-
-                        borderWidth: 2,
-
-                        pointRadius:
-                            selectedCharacters.length === 1
-                                ? 5
-                                : 3,
-
-                        tension: 0.3,
-
-                        spanGaps: true,
-
-                        fill:
-                            selectedCharacters.length === 1
-
-                    });
-
-                }
-            );
-
-
-            break;
-        }
-
-
-        /* ==========================================
-           MÉDIA POR PERSONAGEM
-        =========================================== */
-
-        case 'char-avg-bar': {
-
-            const charAvgs =
-                selectedCharacters.map(
-                    char => {
-
-                        const scores = [];
-
-
-                        filteredEpisodes.forEach(
-                            ep => {
-
-                                if (
-                                    ep.ratings &&
-                                    ep.ratings[char.id]
-                                ) {
-
-                                    scores.push(
-                                        Number(
-                                            ep.ratings[char.id].score
-                                        )
-                                    );
-
-                                }
-
-                            }
-                        );
-
-
-                        const avg =
-                            scores.length > 0
-                                ? scores.reduce(
-                                    (a, b) =>
-                                        a + b,
-                                    0
-                                ) /
-                                scores.length
-                                : 0;
-
-
-                        return {
-
-                            name: char.name,
-
-                            avg:
-                                Number(
-                                    avg.toFixed(2)
-                                )
-
-                        };
-
-                    }
-                );
-
-
-            labels =
-                charAvgs.map(
-                    c => c.name
+                        (
+                            ep.ratings &&
+                            ep.ratings[char.id]
+                        )
+                            ? ep.ratings[char.id].score
+                            : null
                 );
 
 
             datasets.push({
 
                 label:
-                    'Nota Média por Personagem',
+                    char.name,
 
                 data:
-                    charAvgs.map(
-                        c => c.avg
-                    ),
+                    dataPoints,
+
+                borderColor:
+                    colors[
+                        idx %
+                        colors.length
+                    ],
 
                 backgroundColor:
-                    colors.slice(
-                        0,
-                        charAvgs.length
-                    ),
+                    'transparent',
 
-                borderRadius: 8
+                borderWidth:
+                    2,
+
+                pointRadius:
+                    4,
+
+                tension:
+                    0.3,
+
+                spanGaps:
+                    true
 
             });
 
-
-            break;
         }
+    );
 
 
-        /* ==========================================
-           VÁRIOS PERSONAGENS — LINHA
-        =========================================== */
-
-        case 'multi-char-line': {
-
-            labels =
-                filteredEpisodes.map(
-                    ep =>
-                        `T${ep.season}E${ep.episode}`
-                );
+    break;
+}
 
 
-            selectedCharacters.forEach(
-                (char, idx) => {
+/* -------------------------
+   BARRAS DE MÉDIA
+------------------------- */
 
-                    const dataPoints =
-                        filteredEpisodes.map(
-                            ep =>
-                                (
-                                    ep.ratings &&
-                                    ep.ratings[char.id]
-                                )
-                                    ? ep.ratings[char.id].score
-                                    : null
-                        );
+case 'char-avg-bar': {
 
-
-                    datasets.push({
-
-                        label:
-                            char.name,
-
-                        data:
-                            dataPoints,
-
-                        borderColor:
-                            colors[
-                                idx %
-                                colors.length
-                            ],
-
-                        backgroundColor:
-                            'transparent',
-
-                        borderWidth: 2,
-
-                        pointRadius: 3,
-
-                        tension: 0.3,
-
-                        spanGaps: true
-
-                    });
-
-                }
-            );
+    const targetChars =
+        characters.filter(
+            char =>
+                selectedCharacterIds.includes(
+                    char.id
+                )
+        );
 
 
-            break;
-        }
+    const charAvgs =
+        targetChars.map(
+            char => {
+
+                let scores = [];
 
 
-        /* ==========================================
-           VÁRIOS PERSONAGENS — BARRAS
-        =========================================== */
+                filteredEpisodes.forEach(
+                    ep => {
 
-        case 'multi-char-bar': {
+                        if (
+                            ep.ratings &&
+                            ep.ratings[char.id]
+                        ) {
 
-            const charAvgs =
-                selectedCharacters.map(
-                    char => {
+                            scores.push(
+                                ep.ratings[char.id].score
+                            );
 
-                        const scores = [];
-
-
-                        filteredEpisodes.forEach(
-                            ep => {
-
-                                if (
-                                    ep.ratings &&
-                                    ep.ratings[char.id]
-                                ) {
-
-                                    scores.push(
-                                        Number(
-                                            ep.ratings[char.id].score
-                                        )
-                                    );
-
-                                }
-
-                            }
-                        );
-
-
-                        const avg =
-                            scores.length > 0
-                                ? scores.reduce(
-                                    (a, b) =>
-                                        a + b,
-                                    0
-                                ) /
-                                scores.length
-                                : 0;
-
-
-                        return {
-
-                            name:
-                                char.name,
-
-                            avg:
-                                Number(
-                                    avg.toFixed(2)
-                                )
-
-                        };
+                        }
 
                     }
                 );
 
 
-            labels =
-                charAvgs.map(
-                    c => c.name
+                const avg =
+                    scores.length > 0
+                        ? scores.reduce(
+                            (a, b) => a + b,
+                            0
+                        ) /
+                        scores.length
+                        : 0;
+
+
+                return {
+
+                    name:
+                        char.name,
+
+                    avg:
+                        parseFloat(
+                            avg.toFixed(2)
+                        )
+
+                };
+
+            }
+        );
+
+
+    labels =
+        charAvgs.map(
+            c =>
+                c.name
+        );
+
+
+    datasets.push({
+
+        label:
+            'Nota Média por Personagem',
+
+        data:
+            charAvgs.map(
+                c =>
+                    c.avg
+            ),
+
+        backgroundColor:
+            colors,
+
+        borderRadius:
+            8
+
+    });
+
+
+    break;
+}
+
+
+            /* -------------------------
+               VÁRIOS PERSONAGENS LINHA
+            ------------------------- */
+
+            case 'multi-char-line': {
+
+                labels =
+                    filteredEpisodes.map(
+                        ep =>
+                            `T${ep.season}E${ep.episode}`
+                    );
+
+
+               let targetChars =
+    characters.filter(
+        c =>
+            selectedCharacterIds.includes(
+                c.id
+            )
+    );
+
+
+                targetChars.forEach(
+                    (char, idx) => {
+
+                        let dataPoints =
+                            filteredEpisodes.map(
+                                ep =>
+                                    (
+                                        ep.ratings &&
+                                        ep.ratings[char.id]
+                                    )
+                                        ? ep.ratings[char.id].score
+                                        : null
+                            );
+
+
+                        datasets.push({
+
+                            label: char.name,
+
+                            data: dataPoints,
+
+                            borderColor:
+                                colors[
+                                    idx %
+                                    colors.length
+                                ],
+
+                            backgroundColor:
+                                'transparent',
+
+                            borderWidth: 2,
+
+                            tension: 0.3,
+
+                            spanGaps: true
+
+                        });
+
+                    }
                 );
 
 
-            datasets.push({
-
-                label:
-                    'Média Consolidada dos Personagens',
-
-                data:
-                    charAvgs.map(
-                        c => c.avg
-                    ),
-
-                backgroundColor:
-                    colors.slice(
-                        0,
-                        charAvgs.length
-                    ),
-
-                borderRadius: 8
-
-            });
+                break;
+            }
 
 
-            break;
-        }
+            /* -------------------------
+               VÁRIOS PERSONAGENS BARRAS
+            ------------------------- */
+
+            case 'multi-char-bar': {
+
+                let targetChars =
+    characters.filter(
+        c =>
+            selectedCharacterIds.includes(
+                c.id
+            )
+    );
 
 
-        /* ==========================================
-           RANKING
-        =========================================== */
-
-        case 'ranking-chars': {
-
-            /*
-               O ranking agora usa:
-               1. personagens selecionados
-               2. temporada selecionada
-            */
-
-            const charAvgs =
-                selectedCharacters
-                    .map(
+                let charAvgs =
+                    targetChars.map(
                         char => {
 
-                            const scores = [];
+                            let scores = [];
 
 
                             filteredEpisodes.forEach(
@@ -4762,9 +4874,7 @@ function updateChart() {
                                     ) {
 
                                         scores.push(
-                                            Number(
-                                                ep.ratings[char.id].score
-                                            )
+                                            ep.ratings[char.id].score
                                         );
 
                                     }
@@ -4773,11 +4883,10 @@ function updateChart() {
                             );
 
 
-                            const avg =
+                            let avg =
                                 scores.length > 0
                                     ? scores.reduce(
-                                        (a, b) =>
-                                            a + b,
+                                        (a,b) => a+b,
                                         0
                                     ) /
                                     scores.length
@@ -4790,7 +4899,99 @@ function updateChart() {
                                     char.name,
 
                                 avg:
-                                    Number(
+                                    parseFloat(
+                                        avg.toFixed(2)
+                                    )
+
+                            };
+
+                        }
+                    );
+
+
+                labels =
+                    charAvgs.map(
+                        c => c.name
+                    );
+
+
+                datasets.push({
+
+                    label:
+                        'Média Consolidada dos Personagens',
+
+                    data:
+                        charAvgs.map(
+                            c => c.avg
+                        ),
+
+                    backgroundColor:
+                        '#3b82f6',
+
+                    borderRadius: 8
+
+                });
+
+
+                break;
+            }
+
+
+            /* -------------------------
+               RANKING
+            ------------------------- */
+
+            case 'ranking-chars': {
+
+               let charAvgs =
+    characters
+        .filter(
+            char =>
+                selectedCharacterIds.includes(
+                    char.id
+                )
+        )
+        .map(
+            char => {
+
+                            let scores = [];
+
+
+                            episodes.forEach(
+                                ep => {
+
+                                    if (
+                                        ep.ratings &&
+                                        ep.ratings[char.id]
+                                    ) {
+
+                                        scores.push(
+                                            ep.ratings[char.id].score
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+
+                            let avg =
+                                scores.length > 0
+                                    ? scores.reduce(
+                                        (a,b) => a+b,
+                                        0
+                                    ) /
+                                    scores.length
+                                    : 0;
+
+
+                            return {
+
+                                name:
+                                    char.name,
+
+                                avg:
+                                    parseFloat(
                                         avg.toFixed(2)
                                     ),
 
@@ -4802,37 +5003,16 @@ function updateChart() {
                         }
                     )
                     .sort(
-                        (a, b) =>
+                        (a,b) =>
                             b.avg - a.avg
                     );
 
 
-            let html = `
+                let html = `
 
-                <h2>
-                    🏆 Ranking de Melhores Personagens
-                </h2>
-
-            `;
-
-
-            if (
-                charAvgs.length === 0
-            ) {
-
-                html += `
-
-                    <p class="empty-state">
-
-                        Nenhum personagem selecionado.
-
-                    </p>
-
-                `;
-
-            } else {
-
-                html += `
+                    <h2>
+                        🏆 Ranking de Melhores Personagens
+                    </h2>
 
                     <table>
 
@@ -4883,7 +5063,7 @@ function updateChart() {
                                 </td>
 
                                 <td>
-                                    ⭐ ${c.avg.toFixed(2)}
+                                    ⭐ ${c.avg}
                                 </td>
 
                                 <td>
@@ -4906,158 +5086,114 @@ function updateChart() {
 
                 `;
 
+
+                rankingContainer.innerHTML =
+                    html;
+
+
+                document
+                    .querySelector(
+                        '.chart-container'
+                    )
+                    .style.display =
+                    'none';
+
+
+                return;
+
             }
-
-
-            rankingContainer.innerHTML =
-                html;
-
-
-            document
-                .querySelector(
-                    '.chart-container'
-                )
-                .style.display =
-                'none';
-
-
-            return;
 
         }
 
-    }
-
-
-    /*
-       CASO NENHUM PERSONAGEM TENHA SIDO
-       SELECIONADO
-    */
-
-    if (
-        selectedCharacters.length === 0
-    ) {
 
         document
             .querySelector(
                 '.chart-container'
             )
             .style.display =
-            'none';
+            'block';
 
 
-        rankingContainer.innerHTML = `
+        myChart =
+            new Chart(
+                ctx,
+                {
 
-            <div class="empty-state">
+                    type:
+                        chartType.includes('bar')
+                            ? 'bar'
+                            : 'line',
 
-                Nenhum personagem selecionado.
+                    data: {
+                        labels,
+                        datasets
+                    },
 
-            </div>
+                    options: {
 
-        `;
+                        responsive: true,
 
-        return;
+                        maintainAspectRatio:
+                            false,
 
-    }
+                        scales: {
 
+                            y: {
 
-    /*
-       EXIBIR GRÁFICO
-    */
+                                min: 0,
 
-    document
-        .querySelector(
-            '.chart-container'
-        )
-        .style.display =
-        'block';
+                                max: 10,
 
+                                grid: {
 
-    myChart =
-        new Chart(
-            ctx,
-            {
+                                    color:
+                                        'rgba(255,255,255,0.04)'
 
-                type:
-                    chartType.includes('bar')
-                        ? 'bar'
-                        : 'line',
+                                },
 
+                                ticks: {
 
-                data: {
+                                    color:
+                                        'var(--text-muted)'
 
-                    labels,
-
-                    datasets
-
-                },
-
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio:
-                        false,
-
-
-                    scales: {
-
-                        y: {
-
-                            min: 0,
-
-                            max: 10,
-
-                            grid: {
-
-                                color:
-                                    'rgba(255,255,255,0.04)'
+                                }
 
                             },
 
-                            ticks: {
+                            x: {
 
-                                color:
-                                    'var(--text-muted)'
+                                grid: {
+
+                                    display: false
+
+                                },
+
+                                ticks: {
+
+                                    color:
+                                        'var(--text-muted)'
+
+                                }
 
                             }
 
                         },
 
+                        plugins: {
 
-                        x: {
+                            legend: {
 
-                            grid: {
+                                labels: {
 
-                                display: false
+                                    color:
+                                        'var(--text-main)',
 
-                            },
+                                    font: {
 
-                            ticks: {
+                                        family:
+                                            'Inter'
 
-                                color:
-                                    'var(--text-muted)'
-
-                            }
-
-                        }
-
-                    },
-
-
-                    plugins: {
-
-                        legend: {
-
-                            labels: {
-
-                                color:
-                                    'var(--text-main)',
-
-                                font: {
-
-                                    family:
-                                        'Inter'
+                                    }
 
                                 }
 
@@ -5068,13 +5204,12 @@ function updateChart() {
                     }
 
                 }
+            );
 
-            }
-        );
+    }
 
-}
 
-        /* ==========================================
+    /* ==========================================
        INICIALIZAÇÃO
     =========================================== */
 
@@ -5085,72 +5220,6 @@ function updateChart() {
     loadSidebarState();
 
 </script>
-<!-- MODAL DE SELEÇÃO DE PERSONAGENS -->
-<div
-    id="characterSelectorModal"
-    class="character-selector-modal"
-    onclick="closeCharacterSelectorOutside(event)"
->
-
-    <div
-        class="character-selector-panel"
-        onclick="event.stopPropagation()"
-    >
-
-        <div class="character-selector-header">
-
-            <div>
-                <h3>Escolher personagens</h3>
-                <p>Selecione um ou vários personagens</p>
-            </div>
-
-            <button
-                type="button"
-                class="character-selector-close"
-                onclick="closeCharacterSelector()"
-            >
-                ×
-            </button>
-
-        </div>
-
-        <div
-            id="characterSelectorList"
-            class="character-selector-list"
-        ></div>
-
-        <div class="character-selector-footer">
-
-            <button
-                type="button"
-                class="character-selector-action"
-                onclick="selectAllChartCharacters()"
-            >
-                Todos
-            </button>
-
-            <button
-                type="button"
-                class="character-selector-action"
-                onclick="clearChartCharacters()"
-            >
-                Limpar
-            </button>
-
-            <button
-                type="button"
-                class="character-selector-confirm"
-                onclick="confirmCharacterSelection()"
-            >
-                Confirmar
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
 
 </body>
-
 </html>
