@@ -1594,6 +1594,335 @@
                 overflow-x: auto;
             }
         }
+        
+       /* =========================================
+   SELETOR DE PERSONAGENS
+========================================= */
+
+.character-selector-btn {
+    width: 100%;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg-input);
+    color: var(--text-main);
+    cursor: pointer;
+    text-align: left;
+    transition: background .2s ease, border-color .2s ease, transform .15s ease;
+}
+
+.character-selector-btn:hover {
+    border-color: var(--primary);
+    background: var(--bg-surface-solid);
+}
+
+.character-selector-btn:active {
+    transform: scale(.98);
+}
+
+.character-selector-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--primary);
+    color: white;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.character-selector-content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.character-selector-content strong {
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.character-selector-content small {
+    color: var(--text-muted);
+    font-size: .72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.character-selector-arrow {
+    font-size: 24px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+
+/* =========================================
+   MODAL DE SELEÇÃO
+========================================= */
+
+.character-selector-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    background: rgba(0, 0, 0, .65);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.character-selector-modal.show {
+    display: flex;
+}
+
+.character-selector-panel {
+    width: min(520px, 100%);
+    max-height: min(680px, 90vh);
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--bg-surface-solid);
+
+    border: 1px solid var(--border);
+    border-radius: 24px;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, .45);
+
+    overflow: hidden;
+}
+
+.character-selector-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.character-selector-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.character-selector-header p {
+    margin: 4px 0 0;
+    color: var(--text-muted);
+    font-size: .75rem;
+}
+
+.character-selector-close {
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--bg-input);
+    color: var(--text-main);
+
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.character-selector-close:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.character-selector-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    padding: 18px;
+
+    overflow-y: auto;
+}
+
+.character-option {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-height: 50px;
+
+    padding: 10px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--bg-input);
+    color: var(--text-main);
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .15s ease;
+}
+
+.character-option:hover {
+    border-color: var(--primary);
+}
+
+.character-option.selected {
+    border-color: var(--primary);
+
+    background: var(--primary-light);
+}
+
+.character-option:active {
+    transform: scale(.98);
+}
+
+.character-option input {
+    display: none;
+}
+
+.character-option-check {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    color: transparent;
+
+    font-size: 13px;
+
+    flex-shrink: 0;
+}
+
+.character-option.selected .character-option-check {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.character-option-name {
+    font-size: .82rem;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.character-selector-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 15px 18px;
+
+    border-top: 1px solid var(--border);
+
+    background: var(--bg-surface-solid);
+}
+
+.character-selector-action {
+    padding: 9px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--bg-input);
+    color: var(--text-main);
+
+    font-size: .75rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.character-selector-action:hover {
+    border-color: var(--primary);
+}
+
+.character-selector-confirm {
+    margin-left: auto;
+
+    padding: 10px 17px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: .78rem;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.character-selector-confirm:hover {
+    background: var(--primary-hover);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .character-selector-modal {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .character-selector-panel {
+        width: 100%;
+        max-height: 85vh;
+
+        border-radius:
+            24px 24px 0 0;
+    }
+
+    .character-selector-list {
+        grid-template-columns: 1fr;
+    }
+
+    .character-selector-footer {
+        flex-wrap: wrap;
+    }
+
+    .character-selector-confirm {
+        width: 100%;
+        margin-left: 0;
+    }
+
+}
+        
     </style>
 </head>
 
@@ -1929,18 +2258,32 @@
                 </div>
 
 
-                <div id="chartFilterWrapper1">
+                <div id="chartFilterWrapper">
 
-                    <label for="chartFilterChar">
-                        Filtrar Personagem
-                    </label>
+    <label>
+        Filtrar Personagens
+    </label>
 
-                    <select
-                        id="chartFilterChar"
-                        onchange="updateChart()">
-                    </select>
+    <button
+        type="button"
+        id="openCharacterSelector"
+        class="character-selector-btn"
+        onclick="openCharacterSelector()"
+    >
+        <span class="character-selector-icon">👤</span>
 
-                </div>
+        <span class="character-selector-content">
+            <strong>Escolher personagens</strong>
+            <small id="characterSelectionSummary">
+                Todos os personagens
+            </small>
+        </span>
+
+        <span class="character-selector-arrow">›</span>
+    </button>
+
+    </div>           
+ </div>
 
 
                 <div id="chartFilterWrapper2">
@@ -3658,206 +4001,608 @@
 
     }
 
+/* ==========================================
+   GRÁFICOS
+=========================================== */
 
-    /* ==========================================
-       GRÁFICOS
-    =========================================== */
+function initChartFilters() {
 
-    function initChartFilters() {
+    const list =
+        document.getElementById(
+            'characterSelectorList'
+        );
 
-        const charSelect =
-            document.getElementById(
-                'chartFilterChar'
-            );
-
-
-        charSelect.innerHTML =
-            '<option value="all">Todos</option>';
+    if (!list) return;
 
 
-        characters.forEach(c => {
+    list.innerHTML =
+        characters.map(char => `
 
-            charSelect.innerHTML += `
+            <label
+                class="character-option"
+                data-character-id="${char.id}"
+            >
 
-                <option value="${c.id}">
-                    ${c.name}
-                </option>
+                <input
+                    type="checkbox"
+                    class="chart-character-checkbox"
+                    value="${char.id}"
+                    onchange="updateCharacterOptionVisual(this)"
+                >
 
-            `;
+                <span class="character-option-check">
+                    ✓
+                </span>
 
-        });
+                <span class="character-option-name">
+                    ${char.name}
+                </span>
+
+            </label>
+
+        `).join('');
+
+
+    /*
+       Por padrão, todos os personagens
+       começam selecionados.
+    */
+
+    selectAllChartCharacters(false);
+
+}
+
+
+/* ==========================================
+   OBTER PERSONAGENS SELECIONADOS
+========================================== */
+
+function getSelectedCharacterIds() {
+
+    const checkboxes =
+        document.querySelectorAll(
+            '.chart-character-checkbox:checked'
+        );
+
+
+    return Array.from(checkboxes)
+        .map(input =>
+            Number(input.value)
+        );
+
+}
+
+
+/* ==========================================
+   ABRIR SELETOR
+========================================== */
+
+function openCharacterSelector() {
+
+    const modal =
+        document.getElementById(
+            'characterSelectorModal'
+        );
+
+
+    if (!modal) return;
+
+
+    modal.classList.add('show');
+
+}
+
+
+/* ==========================================
+   FECHAR SELETOR
+========================================== */
+
+function closeCharacterSelector() {
+
+    const modal =
+        document.getElementById(
+            'characterSelectorModal'
+        );
+
+
+    if (!modal) return;
+
+
+    modal.classList.remove('show');
+
+}
+
+
+/* ==========================================
+   FECHAR CLICANDO FORA
+========================================== */
+
+function closeCharacterSelectorOutside(event) {
+
+    if (
+        event.target &&
+        event.target.id ===
+            'characterSelectorModal'
+    ) {
+
+        closeCharacterSelector();
+
+    }
+
+}
+
+
+/* ==========================================
+   ATUALIZAR VISUAL DA OPÇÃO
+========================================== */
+
+function updateCharacterOptionVisual(input) {
+
+    const option =
+        input.closest(
+            '.character-option'
+        );
+
+
+    if (!option) return;
+
+
+    option.classList.toggle(
+        'selected',
+        input.checked
+    );
+
+}
+
+
+/* ==========================================
+   RESUMO DA SELEÇÃO
+========================================== */
+
+function updateCharacterSelectionSummary() {
+
+    const summary =
+        document.getElementById(
+            'characterSelectionSummary'
+        );
+
+
+    if (!summary) return;
+
+
+    const selectedIds =
+        getSelectedCharacterIds();
+
+
+    if (selectedIds.length === 0) {
+
+        summary.textContent =
+            'Nenhum personagem selecionado';
+
+        return;
 
     }
 
 
-    function updateChart() {
+    if (
+        selectedIds.length ===
+        characters.length
+    ) {
 
-        const chartType =
-            document.getElementById(
-                'chartTypeSelect'
-            ).value;
+        summary.textContent =
+            'Todos os personagens';
 
+        return;
 
-        const charFilterVal =
-            document.getElementById(
-                'chartFilterChar'
-            ).value;
-
-
-        const seasonFilter =
-            document.getElementById(
-                'chartFilterSeason'
-            ).value;
+    }
 
 
-        const ctx =
-            document.getElementById(
-                'advancedChart'
-            ).getContext('2d');
+    const selectedCharacters =
+        characters.filter(char =>
+            selectedIds.includes(
+                Number(char.id)
+            )
+        );
 
 
-        const rankingContainer =
-            document.getElementById(
-                'rankingTableContainer'
+    const names =
+        selectedCharacters.map(
+            char => char.name
+        );
+
+
+    if (names.length <= 2) {
+
+        summary.textContent =
+            names.join(', ');
+
+    } else {
+
+        summary.textContent =
+            `${names[0]}, ${names[1]} +${names.length - 2}`;
+
+    }
+
+}
+
+
+/* ==========================================
+   SELECIONAR TODOS
+========================================== */
+
+function selectAllChartCharacters(
+    update = true
+) {
+
+    document
+        .querySelectorAll(
+            '.chart-character-checkbox'
+        )
+        .forEach(input => {
+
+            input.checked = true;
+
+            updateCharacterOptionVisual(
+                input
             );
 
-
-        rankingContainer.innerHTML = '';
-
-
-        if (myChart) {
-
-            myChart.destroy();
-
-            myChart = null;
-
-        }
+        });
 
 
-        let filteredEpisodes =
-            [...episodes]
+    updateCharacterSelectionSummary();
+
+
+    if (update) {
+
+        updateChart();
+
+    }
+
+}
+
+
+/* ==========================================
+   LIMPAR SELEÇÃO
+========================================== */
+
+function clearChartCharacters() {
+
+    document
+        .querySelectorAll(
+            '.chart-character-checkbox'
+        )
+        .forEach(input => {
+
+            input.checked = false;
+
+            updateCharacterOptionVisual(
+                input
+            );
+
+        });
+
+
+    updateCharacterSelectionSummary();
+
+
+    updateChart();
+
+}
+
+
+/* ==========================================
+   CONFIRMAR SELEÇÃO
+========================================== */
+
+function confirmCharacterSelection() {
+
+    updateCharacterSelectionSummary();
+
+    closeCharacterSelector();
+
+    updateChart();
+
+}
+
+
+/* ==========================================
+   ATUALIZAR GRÁFICO
+========================================== */
+
+function updateChart() {
+
+    const chartType =
+        document.getElementById(
+            'chartTypeSelect'
+        ).value;
+
+
+    const selectedCharIds =
+        getSelectedCharacterIds();
+
+
+    const seasonFilter =
+        document.getElementById(
+            'chartFilterSeason'
+        ).value;
+
+
+    const canvas =
+        document.getElementById(
+            'advancedChart'
+        );
+
+
+    if (!canvas) return;
+
+
+    const ctx =
+        canvas.getContext('2d');
+
+
+    const rankingContainer =
+        document.getElementById(
+            'rankingTableContainer'
+        );
+
+
+    if (!rankingContainer) return;
+
+
+    rankingContainer.innerHTML = '';
+
+
+    if (myChart) {
+
+        myChart.destroy();
+
+        myChart = null;
+
+    }
+
+
+    /*
+       FILTRO DE TEMPORADA
+    */
+
+    let filteredEpisodes =
+        [...episodes]
             .sort(
-                (a,b) =>
+                (a, b) =>
                     (a.season - b.season) ||
                     (a.episode - b.episode)
             );
 
 
-        if (
-            seasonFilter !== 'all'
-        ) {
+    if (
+        seasonFilter !== 'all'
+    ) {
 
-            filteredEpisodes =
-                filteredEpisodes.filter(
-                    e =>
-                        e.season ==
-                        seasonFilter
+        filteredEpisodes =
+            filteredEpisodes.filter(
+                ep =>
+                    Number(ep.season) ===
+                    Number(seasonFilter)
+            );
+
+    }
+
+
+    let labels = [];
+
+    let datasets = [];
+
+
+    const colors = [
+        '#f43f5e',
+        '#3b82f6',
+        '#10b981',
+        '#f59e0b',
+        '#8b5cf6',
+        '#06b6d4',
+        '#ec4899',
+        '#6366f1',
+        '#eab308',
+        '#64748b'
+    ];
+
+
+    /*
+       PERSONAGENS SELECIONADOS
+    */
+
+    const selectedCharacters =
+        characters.filter(char =>
+            selectedCharIds.includes(
+                Number(char.id)
+            )
+        );
+
+
+    /* ==========================================
+       EVOLUÇÃO DOS PERSONAGENS
+    =========================================== */
+
+    
+    switch (chartType) {
+
+        case 'char-evolution': {
+
+            labels =
+                filteredEpisodes.map(
+                    ep =>
+                        `T${ep.season}E${ep.episode}`
                 );
 
-        }
 
-
-        let labels = [];
-        let datasets = [];
-
-
-        const colors = [
-            '#f43f5e',
-            '#3b82f6',
-            '#10b981',
-            '#f59e0b',
-            '#8b5cf6',
-            '#06b6d4',
-            '#ec4899',
-            '#6366f1',
-            '#eab308',
-            '#64748b'
-        ];
-
-
-        switch(chartType) {
-
-            /* -------------------------
-               EVOLUÇÃO
-            ------------------------- */
-
-            case 'char-evolution': {
-
-                labels =
-                    filteredEpisodes.map(
-                        ep =>
-                            `T${ep.season}E${ep.episode}`
-                    );
-
-
-                if (
-                    charFilterVal === 'all'
-                ) {
-
-                    characters.forEach(
-                        (char, idx) => {
-
-                            let dataPoints =
-                                filteredEpisodes.map(
-                                    ep =>
-                                        (
-                                            ep.ratings &&
-                                            ep.ratings[char.id]
-                                        )
-                                            ? ep.ratings[char.id].score
-                                            : null
-                                );
-
-
-                            datasets.push({
-
-                                label: char.name,
-
-                                data: dataPoints,
-
-                                borderColor:
-                                    colors[
-                                        idx %
-                                        colors.length
-                                    ],
-
-                                backgroundColor:
-                                    'transparent',
-
-                                borderWidth: 2,
-
-                                tension: 0.3,
-
-                                spanGaps: true
-
-                            });
-
-                        }
-                    );
-
-                } else {
-
-                    const charId =
-                        parseInt(
-                            charFilterVal
-                        );
-
-
-                    const char =
-                        characters.find(
-                            c =>
-                                c.id === charId
-                        );
-
+            selectedCharacters.forEach(
+                (char, idx) => {
 
                     const dataPoints =
                         filteredEpisodes.map(
                             ep =>
                                 (
                                     ep.ratings &&
-                                    ep.ratings[charId]
+                                    ep.ratings[char.id]
                                 )
-                                    ? ep.ratings[charId].score
+                                    ? ep.ratings[char.id].score
+                                    : null
+                        );
+
+
+                    datasets.push({
+
+                        label: char.name,
+
+                        data: dataPoints,
+
+                        borderColor:
+                            colors[
+                                idx %
+                                colors.length
+                            ],
+
+                        backgroundColor:
+                            'transparent',
+
+                        borderWidth: 2,
+
+                        pointRadius:
+                            selectedCharacters.length === 1
+                                ? 5
+                                : 3,
+
+                        tension: 0.3,
+
+                        spanGaps: true,
+
+                        fill:
+                            selectedCharacters.length === 1
+
+                    });
+
+                }
+            );
+
+
+            break;
+        }
+
+
+        /* ==========================================
+           MÉDIA POR PERSONAGEM
+        =========================================== */
+
+        case 'char-avg-bar': {
+
+            const charAvgs =
+                selectedCharacters.map(
+                    char => {
+
+                        const scores = [];
+
+
+                        filteredEpisodes.forEach(
+                            ep => {
+
+                                if (
+                                    ep.ratings &&
+                                    ep.ratings[char.id]
+                                ) {
+
+                                    scores.push(
+                                        Number(
+                                            ep.ratings[char.id].score
+                                        )
+                                    );
+
+                                }
+
+                            }
+                        );
+
+
+                        const avg =
+                            scores.length > 0
+                                ? scores.reduce(
+                                    (a, b) =>
+                                        a + b,
+                                    0
+                                ) /
+                                scores.length
+                                : 0;
+
+
+                        return {
+
+                            name: char.name,
+
+                            avg:
+                                Number(
+                                    avg.toFixed(2)
+                                )
+
+                        };
+
+                    }
+                );
+
+
+            labels =
+                charAvgs.map(
+                    c => c.name
+                );
+
+
+            datasets.push({
+
+                label:
+                    'Nota Média por Personagem',
+
+                data:
+                    charAvgs.map(
+                        c => c.avg
+                    ),
+
+                backgroundColor:
+                    colors.slice(
+                        0,
+                        charAvgs.length
+                    ),
+
+                borderRadius: 8
+
+            });
+
+
+            break;
+        }
+
+
+        /* ==========================================
+           VÁRIOS PERSONAGENS — LINHA
+        =========================================== */
+
+        case 'multi-char-line': {
+
+            labels =
+                filteredEpisodes.map(
+                    ep =>
+                        `T${ep.season}E${ep.episode}`
+                );
+
+
+            selectedCharacters.forEach(
+                (char, idx) => {
+
+                    const dataPoints =
+                        filteredEpisodes.map(
+                            ep =>
+                                (
+                                    ep.ratings &&
+                                    ep.ratings[char.id]
+                                )
+                                    ? ep.ratings[char.id].score
                                     : null
                         );
 
@@ -3865,23 +4610,23 @@
                     datasets.push({
 
                         label:
-                            char
-                                ? char.name
-                                : 'Personagem',
+                            char.name,
 
-                        data: dataPoints,
+                        data:
+                            dataPoints,
 
                         borderColor:
-                            '#f43f5e',
+                            colors[
+                                idx %
+                                colors.length
+                            ],
 
                         backgroundColor:
-                            'rgba(244, 63, 94, 0.1)',
+                            'transparent',
 
-                        borderWidth: 3,
+                        borderWidth: 2,
 
-                        pointRadius: 5,
-
-                        fill: true,
+                        pointRadius: 3,
 
                         tension: 0.3,
 
@@ -3890,195 +4635,122 @@
                     });
 
                 }
-
-                break;
-            }
+            );
 
 
-            /* -------------------------
-               BARRAS DE MÉDIA
-            ------------------------- */
-
-            case 'char-avg-bar': {
-
-                let targetChars =
-                    charFilterVal === 'all'
-                        ? characters
-                        : characters.filter(
-                            c =>
-                                c.id ==
-                                charFilterVal
-                        );
+            break;
+        }
 
 
-                let charAvgs =
-                    targetChars.map(
-                        char => {
+        /* ==========================================
+           VÁRIOS PERSONAGENS — BARRAS
+        =========================================== */
 
-                            let scores = [];
+        case 'multi-char-bar': {
+
+            const charAvgs =
+                selectedCharacters.map(
+                    char => {
+
+                        const scores = [];
 
 
-                            filteredEpisodes.forEach(
-                                ep => {
+                        filteredEpisodes.forEach(
+                            ep => {
 
-                                    if (
-                                        ep.ratings &&
-                                        ep.ratings[char.id]
-                                    ) {
+                                if (
+                                    ep.ratings &&
+                                    ep.ratings[char.id]
+                                ) {
 
-                                        scores.push(
+                                    scores.push(
+                                        Number(
                                             ep.ratings[char.id].score
-                                        );
-
-                                    }
+                                        )
+                                    );
 
                                 }
-                            );
 
-
-                            let avg =
-                                scores.length > 0
-                                    ? scores.reduce(
-                                        (a,b) => a+b,
-                                        0
-                                    ) /
-                                    scores.length
-                                    : 0;
-
-
-                            return {
-
-                                name: char.name,
-
-                                avg:
-                                    parseFloat(
-                                        avg.toFixed(2)
-                                    )
-
-                            };
-
-                        }
-                    );
-
-
-                labels =
-                    charAvgs.map(
-                        c => c.name
-                    );
-
-
-                datasets.push({
-
-                    label:
-                        'Nota Média por Personagem',
-
-                    data:
-                        charAvgs.map(
-                            c => c.avg
-                        ),
-
-                    backgroundColor:
-                        colors,
-
-                    borderRadius: 8
-
-                });
-
-
-                break;
-            }
-
-
-            /* -------------------------
-               VÁRIOS PERSONAGENS LINHA
-            ------------------------- */
-
-            case 'multi-char-line': {
-
-                labels =
-                    filteredEpisodes.map(
-                        ep =>
-                            `T${ep.season}E${ep.episode}`
-                    );
-
-
-                let targetChars =
-                    charFilterVal === 'all'
-                        ? characters
-                        : characters.filter(
-                            c =>
-                                c.id ==
-                                charFilterVal
+                            }
                         );
 
 
-                targetChars.forEach(
-                    (char, idx) => {
-
-                        let dataPoints =
-                            filteredEpisodes.map(
-                                ep =>
-                                    (
-                                        ep.ratings &&
-                                        ep.ratings[char.id]
-                                    )
-                                        ? ep.ratings[char.id].score
-                                        : null
-                            );
+                        const avg =
+                            scores.length > 0
+                                ? scores.reduce(
+                                    (a, b) =>
+                                        a + b,
+                                    0
+                                ) /
+                                scores.length
+                                : 0;
 
 
-                        datasets.push({
+                        return {
 
-                            label: char.name,
+                            name:
+                                char.name,
 
-                            data: dataPoints,
+                            avg:
+                                Number(
+                                    avg.toFixed(2)
+                                )
 
-                            borderColor:
-                                colors[
-                                    idx %
-                                    colors.length
-                                ],
-
-                            backgroundColor:
-                                'transparent',
-
-                            borderWidth: 2,
-
-                            tension: 0.3,
-
-                            spanGaps: true
-
-                        });
+                        };
 
                     }
                 );
 
 
-                break;
-            }
+            labels =
+                charAvgs.map(
+                    c => c.name
+                );
 
 
-            /* -------------------------
-               VÁRIOS PERSONAGENS BARRAS
-            ------------------------- */
+            datasets.push({
 
-            case 'multi-char-bar': {
+                label:
+                    'Média Consolidada dos Personagens',
 
-                let targetChars =
-                    charFilterVal === 'all'
-                        ? characters
-                        : characters.filter(
-                            c =>
-                                c.id ==
-                                charFilterVal
-                        );
+                data:
+                    charAvgs.map(
+                        c => c.avg
+                    ),
+
+                backgroundColor:
+                    colors.slice(
+                        0,
+                        charAvgs.length
+                    ),
+
+                borderRadius: 8
+
+            });
 
 
-                let charAvgs =
-                    targetChars.map(
+            break;
+        }
+
+
+        /* ==========================================
+           RANKING
+        =========================================== */
+
+        case 'ranking-chars': {
+
+            /*
+               O ranking agora usa:
+               1. personagens selecionados
+               2. temporada selecionada
+            */
+
+            const charAvgs =
+                selectedCharacters
+                    .map(
                         char => {
 
-                            let scores = [];
+                            const scores = [];
 
 
                             filteredEpisodes.forEach(
@@ -4090,7 +4762,9 @@
                                     ) {
 
                                         scores.push(
-                                            ep.ratings[char.id].score
+                                            Number(
+                                                ep.ratings[char.id].score
+                                            )
                                         );
 
                                     }
@@ -4099,10 +4773,11 @@
                             );
 
 
-                            let avg =
+                            const avg =
                                 scores.length > 0
                                     ? scores.reduce(
-                                        (a,b) => a+b,
+                                        (a, b) =>
+                                            a + b,
                                         0
                                     ) /
                                     scores.length
@@ -4115,92 +4790,7 @@
                                     char.name,
 
                                 avg:
-                                    parseFloat(
-                                        avg.toFixed(2)
-                                    )
-
-                            };
-
-                        }
-                    );
-
-
-                labels =
-                    charAvgs.map(
-                        c => c.name
-                    );
-
-
-                datasets.push({
-
-                    label:
-                        'Média Consolidada dos Personagens',
-
-                    data:
-                        charAvgs.map(
-                            c => c.avg
-                        ),
-
-                    backgroundColor:
-                        '#3b82f6',
-
-                    borderRadius: 8
-
-                });
-
-
-                break;
-            }
-
-
-            /* -------------------------
-               RANKING
-            ------------------------- */
-
-            case 'ranking-chars': {
-
-                let charAvgs =
-                    characters.map(
-                        char => {
-
-                            let scores = [];
-
-
-                            episodes.forEach(
-                                ep => {
-
-                                    if (
-                                        ep.ratings &&
-                                        ep.ratings[char.id]
-                                    ) {
-
-                                        scores.push(
-                                            ep.ratings[char.id].score
-                                        );
-
-                                    }
-
-                                }
-                            );
-
-
-                            let avg =
-                                scores.length > 0
-                                    ? scores.reduce(
-                                        (a,b) => a+b,
-                                        0
-                                    ) /
-                                    scores.length
-                                    : 0;
-
-
-                            return {
-
-                                name:
-                                    char.name,
-
-                                avg:
-                                    parseFloat(
+                                    Number(
                                         avg.toFixed(2)
                                     ),
 
@@ -4212,16 +4802,37 @@
                         }
                     )
                     .sort(
-                        (a,b) =>
+                        (a, b) =>
                             b.avg - a.avg
                     );
 
 
-                let html = `
+            let html = `
 
-                    <h2>
-                        🏆 Ranking de Melhores Personagens
-                    </h2>
+                <h2>
+                    🏆 Ranking de Melhores Personagens
+                </h2>
+
+            `;
+
+
+            if (
+                charAvgs.length === 0
+            ) {
+
+                html += `
+
+                    <p class="empty-state">
+
+                        Nenhum personagem selecionado.
+
+                    </p>
+
+                `;
+
+            } else {
+
+                html += `
 
                     <table>
 
@@ -4272,7 +4883,7 @@
                                 </td>
 
                                 <td>
-                                    ⭐ ${c.avg}
+                                    ⭐ ${c.avg.toFixed(2)}
                                 </td>
 
                                 <td>
@@ -4295,114 +4906,158 @@
 
                 `;
 
-
-                rankingContainer.innerHTML =
-                    html;
-
-
-                document
-                    .querySelector(
-                        '.chart-container'
-                    )
-                    .style.display =
-                    'none';
-
-
-                return;
-
             }
+
+
+            rankingContainer.innerHTML =
+                html;
+
+
+            document
+                .querySelector(
+                    '.chart-container'
+                )
+                .style.display =
+                'none';
+
+
+            return;
 
         }
 
+    }
+
+
+    /*
+       CASO NENHUM PERSONAGEM TENHA SIDO
+       SELECIONADO
+    */
+
+    if (
+        selectedCharacters.length === 0
+    ) {
 
         document
             .querySelector(
                 '.chart-container'
             )
             .style.display =
-            'block';
+            'none';
 
 
-        myChart =
-            new Chart(
-                ctx,
-                {
+        rankingContainer.innerHTML = `
 
-                    type:
-                        chartType.includes('bar')
-                            ? 'bar'
-                            : 'line',
+            <div class="empty-state">
 
-                    data: {
-                        labels,
-                        datasets
-                    },
+                Nenhum personagem selecionado.
 
-                    options: {
+            </div>
 
-                        responsive: true,
+        `;
 
-                        maintainAspectRatio:
-                            false,
+        return;
 
-                        scales: {
+    }
 
-                            y: {
 
-                                min: 0,
+    /*
+       EXIBIR GRÁFICO
+    */
 
-                                max: 10,
+    document
+        .querySelector(
+            '.chart-container'
+        )
+        .style.display =
+        'block';
 
-                                grid: {
 
-                                    color:
-                                        'rgba(255,255,255,0.04)'
+    myChart =
+        new Chart(
+            ctx,
+            {
 
-                                },
+                type:
+                    chartType.includes('bar')
+                        ? 'bar'
+                        : 'line',
 
-                                ticks: {
 
-                                    color:
-                                        'var(--text-muted)'
+                data: {
 
-                                }
+                    labels,
+
+                    datasets
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio:
+                        false,
+
+
+                    scales: {
+
+                        y: {
+
+                            min: 0,
+
+                            max: 10,
+
+                            grid: {
+
+                                color:
+                                    'rgba(255,255,255,0.04)'
 
                             },
 
-                            x: {
+                            ticks: {
 
-                                grid: {
-
-                                    display: false
-
-                                },
-
-                                ticks: {
-
-                                    color:
-                                        'var(--text-muted)'
-
-                                }
+                                color:
+                                    'var(--text-muted)'
 
                             }
 
                         },
 
-                        plugins: {
 
-                            legend: {
+                        x: {
 
-                                labels: {
+                            grid: {
 
-                                    color:
-                                        'var(--text-main)',
+                                display: false
 
-                                    font: {
+                            },
 
-                                        family:
-                                            'Inter'
+                            ticks: {
 
-                                    }
+                                color:
+                                    'var(--text-muted)'
+
+                            }
+
+                        }
+
+                    },
+
+
+                    plugins: {
+
+                        legend: {
+
+                            labels: {
+
+                                color:
+                                    'var(--text-main)',
+
+                                font: {
+
+                                    family:
+                                        'Inter'
 
                                 }
 
@@ -4413,12 +5068,13 @@
                     }
 
                 }
-            );
 
-    }
+            }
+        );
 
+}
 
-    /* ==========================================
+        /* ==========================================
        INICIALIZAÇÃO
     =========================================== */
 
@@ -4429,6 +5085,72 @@
     loadSidebarState();
 
 </script>
+<!-- MODAL DE SELEÇÃO DE PERSONAGENS -->
+<div
+    id="characterSelectorModal"
+    class="character-selector-modal"
+    onclick="closeCharacterSelectorOutside(event)"
+>
+
+    <div
+        class="character-selector-panel"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="character-selector-header">
+
+            <div>
+                <h3>Escolher personagens</h3>
+                <p>Selecione um ou vários personagens</p>
+            </div>
+
+            <button
+                type="button"
+                class="character-selector-close"
+                onclick="closeCharacterSelector()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div
+            id="characterSelectorList"
+            class="character-selector-list"
+        ></div>
+
+        <div class="character-selector-footer">
+
+            <button
+                type="button"
+                class="character-selector-action"
+                onclick="selectAllChartCharacters()"
+            >
+                Todos
+            </button>
+
+            <button
+                type="button"
+                class="character-selector-action"
+                onclick="clearChartCharacters()"
+            >
+                Limpar
+            </button>
+
+            <button
+                type="button"
+                class="character-selector-confirm"
+                onclick="confirmCharacterSelection()"
+            >
+                Confirmar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 </body>
+
 </html>
